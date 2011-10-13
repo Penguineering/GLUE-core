@@ -1,10 +1,15 @@
 package de.ovgu.dke.glue.vm;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.ovgu.dke.glue.api.transport.AsyncPackageHandlerFactory;
 import de.ovgu.dke.glue.api.transport.Packet;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
+import de.ovgu.dke.glue.api.transport.PacketHandlerFactory;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.TransportException;
 
@@ -14,6 +19,7 @@ public class VMTransportTest {
 	
 	public static void main(String[] args) throws TransportException {
 
+		// simple handler for server
 		final PacketHandler serverHandler = new PacketHandler() {			
 			@Override
 			public void handle(PacketThread packetThread, Packet packet)
@@ -23,7 +29,21 @@ public class VMTransportTest {
 			}
 		};
 		
-		final VMTransport transport = new VMTransport(serverHandler);
+		// simple dummy-factory
+		PacketHandlerFactory serverHandlerFactory = new PacketHandlerFactory() {			
+			@Override
+			public PacketHandler createPacketHandler() {
+				return serverHandler;
+			}
+		};
+		// -> direct call (no extra threads)
+		
+		final ExecutorService executor = Executors.newSingleThreadExecutor();
+		serverHandlerFactory = new AsyncPackageHandlerFactory(
+				serverHandlerFactory, executor);
+		// -> async call (in other thread) 
+		
+		final VMTransport transport = new VMTransport(serverHandlerFactory);
 		
 		final PacketHandler clientHandler = new PacketHandler() {			
 			@Override
@@ -36,7 +56,14 @@ public class VMTransportTest {
 		final PacketThread thread = transport.createThread(clientHandler);
 		
 		thread.send(new PacketImpl("Hello Server!"));
+		
+		// wait a little for answer (from other thread) before closing
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {}
+		
 		thread.dispose();
+		executor.shutdown();
 		
 		thread.send(new PacketImpl("message after dispose()"));
 		

@@ -8,7 +8,7 @@ import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.TransportException;
 
-public class VMPacketThread implements PacketThread {
+class VMPacketThread implements PacketThread {
 	
 	protected static Log log = LogFactory.getLog(VMPacketThread.class);
 
@@ -19,6 +19,7 @@ public class VMPacketThread implements PacketThread {
 	
 	VMPacketThread(PacketHandler clientHandler,
 			PacketHandler serverHandler) {
+		
 		super();
 		this.clientHandler = clientHandler;
 		this.serverHandler = serverHandler;
@@ -49,8 +50,7 @@ public class VMPacketThread implements PacketThread {
 	}
 
 	@Override
-	public void send(Packet packet) throws TransportException {
-		// server handles packet directly
+	public void send(final Packet packet) throws TransportException {
 		serverHandler.handle(reverse, packet);
 	}
 	

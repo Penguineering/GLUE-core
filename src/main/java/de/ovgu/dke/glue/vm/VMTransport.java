@@ -2,16 +2,17 @@ package de.ovgu.dke.glue.vm;
 
 import de.ovgu.dke.glue.api.transport.LifecycleListener;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
+import de.ovgu.dke.glue.api.transport.PacketHandlerFactory;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.Transport;
 
 public class VMTransport implements Transport {
 	
-	final PacketHandler serverHandler;
+	final PacketHandlerFactory packetHandlerFactory;
 	
-	public VMTransport(PacketHandler serverHandler) {
+	public VMTransport(final PacketHandlerFactory packetHandlerFactory) {
 		super();
-		this.serverHandler = serverHandler;
+		this.packetHandlerFactory = packetHandlerFactory;
 	}
 
 	@Override
@@ -28,7 +29,9 @@ public class VMTransport implements Transport {
 
 	@Override
 	public PacketThread createThread(final PacketHandler handler) {
-		return new VMPacketThread(handler, serverHandler);		
+		return new VMPacketThread(
+				handler, 
+				packetHandlerFactory.createPacketHandler());		
 	}
 
 	@Override
