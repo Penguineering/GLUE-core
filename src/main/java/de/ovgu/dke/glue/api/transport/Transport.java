@@ -10,7 +10,7 @@ public interface Transport {
 	
 	public void removeLifecycleListener(LifecycleListener listener);
 	
-	public PacketThread createThread(PacketHandler handler);
+	public PacketThread createThread(PacketHandler handler) throws TransportException;
 	
 	public void setDefaultPackerHandler(PacketHandler handler);
 	

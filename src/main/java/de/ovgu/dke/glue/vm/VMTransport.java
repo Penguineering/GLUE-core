@@ -5,6 +5,7 @@ import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketHandlerFactory;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.Transport;
+import de.ovgu.dke.glue.api.transport.TransportException;
 
 public class VMTransport implements Transport {
 	
@@ -28,7 +29,7 @@ public class VMTransport implements Transport {
 	}
 
 	@Override
-	public PacketThread createThread(final PacketHandler handler) {
+	public PacketThread createThread(final PacketHandler handler) throws TransportException {
 		return new VMPacketThread(
 				handler, 
 				packetHandlerFactory.createPacketHandler());		

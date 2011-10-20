@@ -50,7 +50,7 @@ public class AsyncPackageHandlerFactory implements PacketHandlerFactory {
 	}
 	
 	@Override
-	public PacketHandler createPacketHandler() {
+	public PacketHandler createPacketHandler() throws TransportException {
 		return new AsyncPackageHandlerWrapper(
 				packetHandlerFactory.createPacketHandler());
 	}
