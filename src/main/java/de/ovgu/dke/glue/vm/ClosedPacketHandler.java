@@ -8,6 +8,17 @@ import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.TransportException;
 
+/**
+ * design-pattern: null-object (behavior) 
+ * singleton, stateless
+ * 
+ * Just swallows all the packets (does nothing).
+ * Can be used as place holder (for a connection to be established)
+ * or to replace the reference to a just closed real handler.
+ * 
+ * @author stober
+ *
+ */
 public class ClosedPacketHandler implements PacketHandler {
 	
 	protected static Log log = LogFactory.getLog(ClosedPacketHandler.class); 
