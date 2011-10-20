@@ -1,5 +1,8 @@
 package de.ovgu.dke.glue.api.transport;
 
+import net.jcip.annotations.Immutable;
+
+@Immutable
 public class TransportException extends Exception {
 
 	/**

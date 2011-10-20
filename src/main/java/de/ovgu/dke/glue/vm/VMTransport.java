@@ -1,5 +1,6 @@
 package de.ovgu.dke.glue.vm;
 
+import de.ovgu.dke.glue.api.reporting.ReportListener;
 import de.ovgu.dke.glue.api.transport.LifecycleListener;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketHandlerFactory;
@@ -38,6 +39,18 @@ public class VMTransport implements Transport {
 	@Override
 	public void setDefaultPackerHandler(PacketHandler handler) {
 		// do we really need this? No ;-)		
+	}
+
+	@Override
+	public void addReportListener(ReportListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeReportListener(ReportListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

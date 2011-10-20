@@ -1,7 +1,8 @@
 package de.ovgu.dke.glue.api.transport;
 
-public interface PacketHandler {
+import net.jcip.annotations.ThreadSafe;
 
+@ThreadSafe
+public interface PacketHandler {
 	public void handle(PacketThread packetThread, Packet packet) throws TransportException;
-	
 }

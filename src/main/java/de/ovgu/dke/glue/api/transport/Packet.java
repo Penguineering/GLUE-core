@@ -1,5 +1,6 @@
 package de.ovgu.dke.glue.api.transport;
 
+// keep immutable! no further synchronization in transport layer
 public interface Packet {
 	
 	public static enum Priority {

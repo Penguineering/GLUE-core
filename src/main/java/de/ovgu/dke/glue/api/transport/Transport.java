@@ -1,6 +1,8 @@
 package de.ovgu.dke.glue.api.transport;
 
-public interface Transport {
+import de.ovgu.dke.glue.api.reporting.Reporter;
+
+public interface Transport extends Reporter {
 	
 	public static enum Status {
 		// TODO
