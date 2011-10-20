@@ -4,10 +4,20 @@ import net.jcip.annotations.Immutable;
 
 @Immutable
 public class TransportException extends Exception {
+	private static final long serialVersionUID = 1095168616944463901L;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5522324231115884851L;
+	public TransportException() {
+	}
 
+	public TransportException(String msg) {
+		super(msg);
+	}
+
+	public TransportException(Throwable cause) {
+		super(cause);
+	}
+
+	public TransportException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 }
