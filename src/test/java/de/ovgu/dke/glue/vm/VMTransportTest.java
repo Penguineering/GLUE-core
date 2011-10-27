@@ -25,8 +25,7 @@ public class VMTransportTest {
 			public void handle(PacketThread packetThread, Packet packet)
 					throws TransportException {
 				log.debug("server received: "+packetThread+" : "+packet);
-				// FIXME adapt
-				//packetThread.send(new PacketImpl("Hello Client!"));
+				packetThread.send("Hello Client!", null);
 			}
 		};
 		
@@ -56,8 +55,7 @@ public class VMTransportTest {
 		
 		final PacketThread thread = transport.createThread(clientHandler);
 		
-		//FIXME adapt
-		//thread.send(new PacketImpl("Hello Server!"));
+		thread.send("Hello Server!", null);
 		
 		// wait a little for answer (from other thread) before closing
 		try {
@@ -67,8 +65,7 @@ public class VMTransportTest {
 		thread.dispose();
 		executor.shutdown();
 		
-		// FIXME adapt
-		//thread.send(new PacketImpl("message after dispose()"));
+		thread.send("message after dispose()", null);
 		
 	}
 

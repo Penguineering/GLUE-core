@@ -2,12 +2,11 @@ package de.ovgu.dke.glue.vm;
 
 import de.ovgu.dke.glue.api.transport.Packet;
 
-//TODO ins test-package verschieben
-public class PacketImpl implements Packet {
+public class VMPacket implements Packet {
 	
 	final Object payload;
 
-	public PacketImpl(Object payload) {
+	public VMPacket(Object payload) {
 		super();
 		this.payload = payload;
 	}

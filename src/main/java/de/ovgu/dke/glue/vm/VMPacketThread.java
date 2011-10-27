@@ -26,17 +26,12 @@ class VMPacketThread implements PacketThread {
 		this.clientHandler = clientHandler;
 		this.serverHandler = serverHandler;
 		
-		this.reverse = new PacketThread() {			
-			//FIXME adapt
-			public void send(Packet packet) throws TransportException {
-				sendBack(packet);
-			}
+		this.reverse = new PacketThread() {
 
 			@Override
 			public void send(Object payload, Priority prority)
 					throws TransportException {
-				// TODO adapt interface
-				
+				sendBack(new VMPacket(payload));
 			}
 
 			@Override
@@ -58,11 +53,6 @@ class VMPacketThread implements PacketThread {
 	public void dispose() {
 		removeReferences();
 	}
-
-	//FIXME adapt
-	public void send(final Packet packet) throws TransportException {
-		serverHandler.handle(reverse, packet);
-	}
 	
 	// back channel
 	protected void sendBack(Packet packet) throws TransportException {
@@ -72,8 +62,7 @@ class VMPacketThread implements PacketThread {
 	@Override
 	public void send(Object payload, Priority prority)
 			throws TransportException {
-		// TODO Auto-generated method stub
-		
+		serverHandler.handle(reverse, new VMPacket(payload));
 	}
 
 }
