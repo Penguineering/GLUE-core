@@ -28,9 +28,9 @@ public class ReportListenerSupport implements Reporter {
 			listeners.remove(listener);
 	}
 
-	public synchronized void fireReport(String msg, Throwable cause) {
+	public synchronized void fireReport(String msg, Throwable cause, Reporter.Level level) {
 		if (listeners != null)
 			for (final ReportListener listener : listeners)
-				listener.onReport(msg, cause);
+				listener.onReport(msg, cause, level);
 	}
 }

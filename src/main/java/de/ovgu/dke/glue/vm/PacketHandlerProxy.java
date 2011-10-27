@@ -5,6 +5,7 @@ import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.TransportException;
 
+//TODO in util.transport
 public class PacketHandlerProxy implements PacketHandler {
 	
 	PacketHandler handler;

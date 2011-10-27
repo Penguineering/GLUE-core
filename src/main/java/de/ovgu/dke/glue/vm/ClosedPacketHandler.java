@@ -19,6 +19,7 @@ import de.ovgu.dke.glue.api.transport.TransportException;
  * @author stober
  *
  */
+// TODO in util.transport
 public class ClosedPacketHandler implements PacketHandler {
 	
 	protected static Log log = LogFactory.getLog(ClosedPacketHandler.class); 
@@ -37,7 +38,7 @@ public class ClosedPacketHandler implements PacketHandler {
 	public void handle(PacketThread packetThread, Packet packet)
 			throws TransportException {
 		// ignored		
-		log.warn("PacketThread closed. Message not sent.");
+		log.debug("PacketThread closed. Message not sent.");
 	}
 
 }

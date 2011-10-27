@@ -8,6 +8,7 @@ public interface Packet {
 		NORMAL,
 		DEFERRABLE;
 		
+		//TODO DEFAULT als extrawert
 		public static final Priority DEFAULT = Priority.NORMAL;
 	}
 	

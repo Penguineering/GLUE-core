@@ -12,6 +12,12 @@ public interface Transport extends Reporter {
 	
 	public void removeLifecycleListener(LifecycleListener listener);
 	
+	/**
+	 * 
+	 * @param handler may not be <code>null</code>
+	 * @return
+	 * @throws TransportException
+	 */
 	public PacketThread createThread(PacketHandler handler) throws TransportException;
 	
 	public void setDefaultPackerHandler(PacketHandler handler);
