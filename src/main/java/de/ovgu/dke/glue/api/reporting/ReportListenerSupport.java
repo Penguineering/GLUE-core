@@ -4,11 +4,23 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 public class ReportListenerSupport implements Reporter {
-	// private final Object source;
+	/**
+	 * The source reporter for onReport events. As the listener support is
+	 * intended to be used in a specific implementation, this field can be
+	 * stored here.
+	 */
+	private final Reporter source;
 
 	private Collection<ReportListener> listeners = null;
 
-	public ReportListenerSupport() {
+	/**
+	 * Creates a new report listener support instance.
+	 * 
+	 * @param source
+	 *            The reporter source to be announces in onReport events.
+	 */
+	public ReportListenerSupport(final Reporter source) {
+		this.source = source;
 	}
 
 	@Override
@@ -28,9 +40,10 @@ public class ReportListenerSupport implements Reporter {
 			listeners.remove(listener);
 	}
 
-	public synchronized void fireReport(String msg, Throwable cause, Reporter.Level level) {
+	public synchronized void fireReport(String msg, Throwable cause,
+			Reporter.Level level) {
 		if (listeners != null)
 			for (final ReportListener listener : listeners)
-				listener.onReport(msg, cause, level);
+				listener.onReport(this.source, msg, cause, level);
 	}
 }

@@ -1,4 +1,4 @@
-package de.ovgu.dke.glue.vm;
+package de.ovgu.dke.glue.util.transport;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,7 +19,7 @@ import de.ovgu.dke.glue.api.transport.TransportException;
  * @author stober
  *
  */
-// TODO in util.transport
+
 public class ClosedPacketHandler implements PacketHandler {
 	
 	protected static Log log = LogFactory.getLog(ClosedPacketHandler.class); 

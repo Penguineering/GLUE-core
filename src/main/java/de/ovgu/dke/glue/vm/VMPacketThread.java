@@ -4,9 +4,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import de.ovgu.dke.glue.api.transport.Packet;
+import de.ovgu.dke.glue.api.transport.Packet.Priority;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.TransportException;
+import de.ovgu.dke.glue.util.transport.ClosedPacketHandler;
 
 class VMPacketThread implements PacketThread {
 	
@@ -25,15 +27,23 @@ class VMPacketThread implements PacketThread {
 		this.serverHandler = serverHandler;
 		
 		this.reverse = new PacketThread() {			
-			@Override
+			//FIXME adapt
 			public void send(Packet packet) throws TransportException {
 				sendBack(packet);
 			}
-	
+
+			@Override
+			public void send(Object payload, Priority prority)
+					throws TransportException {
+				// TODO adapt interface
+				
+			}
+
 			@Override
 			public void dispose() {
 				removeReferences();
 			}
+
 		};
 	}
 	
@@ -49,7 +59,7 @@ class VMPacketThread implements PacketThread {
 		removeReferences();
 	}
 
-	@Override
+	//FIXME adapt
 	public void send(final Packet packet) throws TransportException {
 		serverHandler.handle(reverse, packet);
 	}
@@ -57,6 +67,13 @@ class VMPacketThread implements PacketThread {
 	// back channel
 	protected void sendBack(Packet packet) throws TransportException {
 		clientHandler.handle(this, packet);
+	}
+
+	@Override
+	public void send(Object payload, Priority prority)
+			throws TransportException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

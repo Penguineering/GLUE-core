@@ -7,9 +7,8 @@ import net.jcip.annotations.NotThreadSafe;
 public interface PacketThread {
 
 	public void dispose();
-	
-	// TODO parameter: +payload, +prio, -packet
-	public void send(Packet packet) throws TransportException;
-	
-	
+
+	public void send(final Object payload, final Packet.Priority prority)
+			throws TransportException;
+
 }
