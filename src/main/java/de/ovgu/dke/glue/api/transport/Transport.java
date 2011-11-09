@@ -20,6 +20,7 @@ public interface Transport extends Reporter {
 	 */
 	public PacketThread createThread(PacketHandler handler) throws TransportException;
 	
+	//TODO das eher in die TransportFactory?
 	public void setDefaultPackerHandler(PacketHandler handler);
 	
 }
