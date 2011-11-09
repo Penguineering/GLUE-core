@@ -1,8 +1,31 @@
 package de.ovgu.dke.glue.api.transport;
 
-// be aware of thread boundaries!
+/**
+ * <p>
+ * Listener interface for status changes in a transport's life-cycle.
+ * </p>
+ * 
+ * <p>
+ * Listeners are invoked in the caller's thread context and should be aware of
+ * thread boundaries and must take care of the necessary synchronization
+ * themselves!
+ * </p>
+ * 
+ * @author Stefan Haun (stefan.haun@ovgu.de)
+ * 
+ */
 public interface LifecycleListener {
-
+	/**
+	 * Called when the connection status of a transport changes. See the
+	 * Transport interface for possible states.
+	 * 
+	 * @param transport
+	 *            The transport which changed its status.
+	 * @param oldStatus
+	 *            The old status.
+	 * @param newStatus
+	 *            The new status.
+	 */
 	public void onStatusChange(Transport transport, Transport.Status oldStatus,
 			Transport.Status newStatus);
 

@@ -1,16 +1,38 @@
 package de.ovgu.dke.glue.api.transport;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import net.jcip.annotations.ThreadSafe;
 
+/**
+ * <p>
+ * The centralized register for transport factories allows decoupling of
+ * transport factory initialization and usage. One factory may be set as default
+ * factory, but multiple transport factories are accessible.
+ * </p>
+ * <p>
+ * If more than one factory shall be used, the application has to take care of
+ * factory selection.
+ * </p>
+ * 
+ * <p>
+ * This class is thread safe.
+ * </p>
+ * 
+ * @author Stefan Haun (stefan.haun@ovgu.de)
+ */
 @ThreadSafe
 public class TransportRegistry {
 	private static TransportRegistry instance = null;
 
+	/**
+	 * Get the singleton instance of the transport registry.
+	 * 
+	 * @return Singleton transport registry instance.
+	 */
 	public static synchronized TransportRegistry getInstance() {
 		if (instance == null)
 			instance = new TransportRegistry();
@@ -18,26 +40,71 @@ public class TransportRegistry {
 		return instance;
 	}
 
-	private final ConcurrentMap<String, TransportFactory> registry;
+	private final Map<String, TransportFactory> registry;
 	private String defaultKey;
 
 	private TransportRegistry() {
 		this.registry = new ConcurrentHashMap<String, TransportFactory>();
 	}
 
+	/**
+	 * Register a transport factory. If the key already exists, its associated
+	 * factory is overwritten.
+	 * 
+	 * @param key
+	 *            Key for accessing the transport factory.
+	 * @param factory
+	 *            Transport factory to be registered.
+	 */
 	public void registerTransportFactory(String key, TransportFactory factory) {
 		registry.put(key, factory);
 	}
 
+	/**
+	 * Get the set of all registered transport factory keys.
+	 * 
+	 * @return Unmodifiable set of keys in the registry.
+	 */
 	public Set<String> getTransportFactoryKeys() {
 		return Collections.unmodifiableSet(registry.keySet());
 	}
 
+	/**
+	 * <p>
+	 * Set the default transport factory.
+	 * </p>
+	 * <p>
+	 * The registry will not check whether a factory for this key is registered!
+	 * </p>
+	 * 
+	 * @param key
+	 *            The key of the default transport factory or <code>null</code>
+	 *            to remove the default setting.
+	 */
 	public void setDefaultTransportFactory(String key) {
 		this.defaultKey = key;
 	}
 
+	/**
+	 * Get the transport factory for a key.
+	 * 
+	 * @param key
+	 *            The key used when registering the transport factory.
+	 * @return A transport factory instance or <code>null</code> if there is no
+	 *         factory for the key.
+	 */
+	public TransportFactory getTransportFactory(String key) {
+		return registry.get(key);
+	}
+
+	/**
+	 * Get the default transport factory.
+	 * 
+	 * @return The transport factory instance set as default or
+	 *         <code>null</code>, if no default is set or there is no transport
+	 *         factory for the default key in the registry.
+	 */
 	public TransportFactory getDefaultTransportFactory() {
-		return registry.get(defaultKey);
+		return defaultKey == null ? null : getTransportFactory(defaultKey);
 	}
 }

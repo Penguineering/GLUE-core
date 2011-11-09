@@ -2,6 +2,14 @@ package de.ovgu.dke.glue.api.transport;
 
 import net.jcip.annotations.Immutable;
 
+/**
+ * <p>
+ * Generic exception covering problems with the transport layer.
+ * </p>
+ * 
+ * @author Stefan Haun (stefan.haun@ovgu.de)
+ * 
+ */
 @Immutable
 public class TransportException extends Exception {
 	private static final long serialVersionUID = 1095168616944463901L;
