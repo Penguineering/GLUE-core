@@ -69,6 +69,7 @@ public interface Transport extends Reporter {
 			throws TransportException;
 
 	// TODO das eher in die TransportFactory?
+	// TODO mit transport exception 
 	public void setDefaultPackerHandler(PacketHandler handler);
 
 }
