@@ -1,5 +1,7 @@
 package de.ovgu.dke.glue.vm;
 
+import java.net.URI;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -7,6 +9,7 @@ import de.ovgu.dke.glue.api.transport.Packet;
 import de.ovgu.dke.glue.api.transport.Packet.Priority;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
+import de.ovgu.dke.glue.api.transport.Transport;
 import de.ovgu.dke.glue.api.transport.TransportException;
 import de.ovgu.dke.glue.util.transport.ClosedPacketHandler;
 
@@ -16,18 +19,20 @@ class VMPacketThread implements PacketThread {
 
 	PacketHandler clientHandler;
 	PacketHandler serverHandler;
-	
+
 	final PacketThread reverse;
+	final VMTransport transport;
 	
-	VMPacketThread(PacketHandler clientHandler,
+	VMPacketThread(final VMTransport transport, PacketHandler clientHandler,
 			PacketHandler serverHandler) {
 		
 		super();
+		this.transport = transport;
 		this.clientHandler = clientHandler;
 		this.serverHandler = serverHandler;
 		
 		this.reverse = new PacketThread() {
-
+			
 			@Override
 			public void send(Object payload, Priority prority)
 					throws TransportException {
@@ -37,6 +42,16 @@ class VMPacketThread implements PacketThread {
 			@Override
 			public void dispose() {
 				removeReferences();
+			}
+
+			@Override
+			public Transport getTransport() {
+				return transport;
+			}
+
+			@Override
+			public URI getPeer() {
+				return null;
 			}
 
 		};
@@ -63,6 +78,16 @@ class VMPacketThread implements PacketThread {
 	public void send(Object payload, Priority prority)
 			throws TransportException {
 		serverHandler.handle(reverse, new VMPacket(payload));
+	}
+
+	@Override
+	public Transport getTransport() {
+		return transport;
+	}
+
+	@Override
+	public URI getPeer() {
+		return null;
 	}
 
 }

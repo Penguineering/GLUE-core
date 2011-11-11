@@ -36,7 +36,6 @@ public interface Transport extends Reporter {
 		CLOSED,
 		FAILED
 	}
-
 	/**
 	 * Add a life-cycle listener to this transport.
 	 * 

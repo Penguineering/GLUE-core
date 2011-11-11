@@ -33,7 +33,7 @@ public class VMTransport implements Transport {
 	public PacketThread createThread(final PacketHandler handler)
 			throws TransportException {
 		try {
-			return new VMPacketThread(handler, packetHandlerFactory
+			return new VMPacketThread(this, handler, packetHandlerFactory
 					.createPacketHandler());
 		} catch (InstantiationException e) {
 			throw new TransportException("Unable to create packet handler: "

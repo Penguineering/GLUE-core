@@ -1,5 +1,7 @@
 package de.ovgu.dke.glue.api.transport;
 
+import java.net.URI;
+
 import net.jcip.annotations.NotThreadSafe;
 
 /**
@@ -22,7 +24,6 @@ import net.jcip.annotations.NotThreadSafe;
  * @author Stefan Haun (stefan.haun@ovgu.de)
  * 
  */
-// TODO wie kommt man von hier auf den transport?
 @NotThreadSafe
 public interface PacketThread {
 	/**
@@ -55,7 +56,7 @@ public interface PacketThread {
 	public void send(final Object payload, final Packet.Priority prority)
 			throws TransportException;
 	
-	// TODO getTransport
-	// TODO getPeer
-
+	public Transport getTransport();
+	
+	public URI getPeer();
 }
