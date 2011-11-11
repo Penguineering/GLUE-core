@@ -51,4 +51,10 @@ public interface TransportFactory {
 
 	public void setDefaultPacketHandlerFactory(PacketHandlerFactory factory)
 			throws TransportException;
+
+	public String getDefaultRegistryKey();
+
+	public void init() throws TransportException;
+
+	public void dispose();
 }

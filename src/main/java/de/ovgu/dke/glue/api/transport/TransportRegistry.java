@@ -1,5 +1,7 @@
 package de.ovgu.dke.glue.api.transport;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +29,10 @@ import net.jcip.annotations.ThreadSafe;
 @ThreadSafe
 public class TransportRegistry {
 	private static TransportRegistry instance = null;
+
+	public static boolean AS_DEFAULT = true;
+	public static boolean NO_DEFAULT = false;
+	public static String DEFAULT_KEY = null;
 
 	/**
 	 * Get the singleton instance of the transport registry.
@@ -104,7 +110,67 @@ public class TransportRegistry {
 	 *         <code>null</code>, if no default is set or there is no transport
 	 *         factory for the default key in the registry.
 	 */
-	public TransportFactory getDefaultTransportFactory() {
-		return defaultKey == null ? null : getTransportFactory(defaultKey);
+	public static synchronized TransportFactory getDefaultTransportFactory() {
+		final TransportRegistry reg = getInstance();
+		return reg.defaultKey == null ? null : reg
+				.getTransportFactory(reg.defaultKey);
 	}
+
+	public TransportFactory loadTransportFactory(String factoryClass,
+			PacketHandlerFactory handlerFactory, boolean asDefault, String key)
+			throws TransportException {
+		try {
+			// get the class
+			final Class<?> clazz = Class.forName(factoryClass);
+
+			// create instance
+			final Constructor<?> con = clazz.getConstructor();
+			final TransportFactory factory = (TransportFactory) con
+					.newInstance();
+
+			// some setup
+			if (factory != null) {
+				factory.init();
+				factory.setDefaultPacketHandlerFactory(handlerFactory);
+
+				// register the factory
+				final String k = (key == DEFAULT_KEY) ? factory
+						.getDefaultRegistryKey() : key;
+				registerTransportFactory(k, factory);
+				if (asDefault)
+					setDefaultTransportFactory(k);
+			}
+
+			return factory;
+		} catch (ClassNotFoundException e) {
+			throw new TransportException("Factory class " + factoryClass
+					+ " could not be found!", e);
+		} catch (SecurityException e) {
+			throw new TransportException(
+					"Security exception on accessing constructor for "
+							+ factoryClass + ": " + e.getMessage(), e);
+		} catch (NoSuchMethodException e) {
+			throw new TransportException("Method could not be found: "
+					+ e.getMessage(), e);
+		} catch (IllegalArgumentException e) {
+			throw new TransportException(
+					"Illegal arguments calling constructor for " + factoryClass
+							+ ": " + e.getMessage(), e);
+		} catch (InstantiationException e) {
+			throw new TransportException("Could not instantiate "
+					+ factoryClass + ": " + e.getMessage(), e);
+		} catch (IllegalAccessException e) {
+			throw new TransportException("Illegal access: " + e.getMessage(), e);
+		} catch (InvocationTargetException e) {
+			throw new TransportException("Invocation target exception: "
+					+ e.getMessage(), e);
+		}
+
+	}
+
+	public void disposeAll() {
+		for (final TransportFactory factory : this.registry.values())
+			factory.dispose();
+	}
+
 }
