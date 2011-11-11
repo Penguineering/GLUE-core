@@ -1,6 +1,5 @@
 package de.ovgu.dke.glue.api.transport;
 
-import de.ovgu.dke.glue.api.reporting.Reporter;
 
 /**
  * <p>
@@ -26,31 +25,17 @@ import de.ovgu.dke.glue.api.reporting.Reporter;
  * 
  */
 // TODO thread safety?
-public interface Transport extends Reporter {
+public interface Transport {
 
 	/**
 	 * The status of this transport.
 	 */
 	public static enum Status {
+		CREATED,
 		CONNECTED,
 		CLOSED,
 		FAILED
 	}
-	/**
-	 * Add a life-cycle listener to this transport.
-	 * 
-	 * @param listener
-	 *            The life-cycle listener to add.
-	 */
-	public void addLifecycleListener(LifecycleListener listener);
-
-	/**
-	 * Remove a life-cycle listener from this report.
-	 * 
-	 * @param listener
-	 *            The life-cycle listener to remove.
-	 */
-	public void removeLifecycleListener(LifecycleListener listener);
 
 	/**
 	 * <p>

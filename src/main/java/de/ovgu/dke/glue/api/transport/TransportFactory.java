@@ -3,6 +3,7 @@ package de.ovgu.dke.glue.api.transport;
 import java.net.URI;
 
 import net.jcip.annotations.ThreadSafe;
+import de.ovgu.dke.glue.api.reporting.Reporter;
 
 /**
  * <p>
@@ -22,7 +23,7 @@ import net.jcip.annotations.ThreadSafe;
  * 
  */
 @ThreadSafe
-public interface TransportFactory {
+public interface TransportFactory extends Reporter {
 	/**
 	 * <p>
 	 * Create a transport to the denoted peer or retrieve it from a storage of
@@ -57,4 +58,21 @@ public interface TransportFactory {
 	public void init() throws TransportException;
 
 	public void dispose();
+	
+	/**
+	 * Add a life-cycle listener to this transport.
+	 * 
+	 * @param listener
+	 *            The life-cycle listener to add.
+	 */
+	public void addTransportLifecycleListener(TransportLifecycleListener listener);
+
+	/**
+	 * Remove a life-cycle listener from this report.
+	 * 
+	 * @param listener
+	 *            The life-cycle listener to remove.
+	 */
+	public void removeTransportLifecycleListener(TransportLifecycleListener listener);
+
 }

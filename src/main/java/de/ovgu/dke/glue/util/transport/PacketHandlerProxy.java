@@ -3,7 +3,6 @@ package de.ovgu.dke.glue.util.transport;
 import de.ovgu.dke.glue.api.transport.Packet;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
-import de.ovgu.dke.glue.api.transport.TransportException;
 
 public class PacketHandlerProxy implements PacketHandler {
 

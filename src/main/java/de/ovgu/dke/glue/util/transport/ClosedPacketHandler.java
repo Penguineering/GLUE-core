@@ -6,7 +6,6 @@ import org.apache.commons.logging.LogFactory;
 import de.ovgu.dke.glue.api.transport.Packet;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
-import de.ovgu.dke.glue.api.transport.TransportException;
 
 /**
  * design-pattern: null-object (behavior) singleton, stateless
