@@ -54,5 +54,8 @@ public interface PacketThread {
 	 */
 	public void send(final Object payload, final Packet.Priority prority)
 			throws TransportException;
+	
+	// TODO getTransport
+	// TODO getPeer
 
 }

@@ -9,9 +9,9 @@ import de.ovgu.dke.glue.api.transport.Transport;
 import de.ovgu.dke.glue.api.transport.TransportException;
 
 public class VMTransport implements Transport {
-	
+
 	final PacketHandlerFactory packetHandlerFactory;
-	
+
 	public VMTransport(final PacketHandlerFactory packetHandlerFactory) {
 		super();
 		this.packetHandlerFactory = packetHandlerFactory;
@@ -20,37 +20,42 @@ public class VMTransport implements Transport {
 	@Override
 	public void addLifecycleListener(LifecycleListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void removeLifecycleListener(LifecycleListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public PacketThread createThread(final PacketHandler handler) throws TransportException {
-		return new VMPacketThread(
-				handler, 
-				packetHandlerFactory.createPacketHandler());		
+	public PacketThread createThread(final PacketHandler handler)
+			throws TransportException {
+		try {
+			return new VMPacketThread(handler, packetHandlerFactory
+					.createPacketHandler());
+		} catch (InstantiationException e) {
+			throw new TransportException("Unable to create packet handler: "
+					+ e.getMessage(), e);
+		}
 	}
 
 	@Override
 	public void setDefaultPackerHandler(PacketHandler handler) {
-		// do we really need this? No ;-)		
+		// do we really need this? No ;-)
 	}
 
 	@Override
 	public void addReportListener(ReportListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void removeReportListener(ReportListener listener) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

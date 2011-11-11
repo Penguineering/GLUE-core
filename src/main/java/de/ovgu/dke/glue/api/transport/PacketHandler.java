@@ -32,10 +32,6 @@ public interface PacketHandler {
 	 *            The packet thread in which the packet occured.
 	 * @param packet
 	 *            The incoming packet.
-	 * @throws TransportException
-	 *             if there is a transport or communication related exception in
-	 *             handling the packet.
 	 */
-	public void handle(PacketThread packetThread, Packet packet)
-			throws TransportException;
+	public void handle(PacketThread packetThread, Packet packet);
 }

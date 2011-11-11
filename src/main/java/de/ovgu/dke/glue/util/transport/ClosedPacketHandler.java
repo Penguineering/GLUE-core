@@ -9,35 +9,33 @@ import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.TransportException;
 
 /**
- * design-pattern: null-object (behavior) 
- * singleton, stateless
+ * design-pattern: null-object (behavior) singleton, stateless
  * 
- * Just swallows all the packets (does nothing).
- * Can be used as place holder (for a connection to be established)
- * or to replace the reference to a just closed real handler.
+ * Just swallows all the packets (does nothing). Can be used as place holder
+ * (for a connection to be established) or to replace the reference to a just
+ * closed real handler.
  * 
  * @author stober
- *
+ * 
  */
 
 public class ClosedPacketHandler implements PacketHandler {
-	
-	protected static Log log = LogFactory.getLog(ClosedPacketHandler.class); 
-	
+
+	protected static Log log = LogFactory.getLog(ClosedPacketHandler.class);
+
 	private final static ClosedPacketHandler instance = new ClosedPacketHandler();
-	
+
 	public static ClosedPacketHandler instance() {
 		return instance;
 	}
-	
+
 	private ClosedPacketHandler() {
 		// nah!
 	}
 
 	@Override
-	public void handle(PacketThread packetThread, Packet packet)
-			throws TransportException {
-		// ignored		
+	public void handle(PacketThread packetThread, Packet packet) {
+		// ignored
 		log.debug("PacketThread closed. Message not sent.");
 	}
 

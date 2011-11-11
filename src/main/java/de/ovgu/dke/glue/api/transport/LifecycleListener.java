@@ -14,6 +14,9 @@ package de.ovgu.dke.glue.api.transport;
  * @author Stefan Haun (stefan.haun@ovgu.de)
  * 
  */
+// TODO in die TransportFactory
+// TODO auch für Transports
+// TODO AbstractTransportFactory, die die listener korrekt aufruft
 public interface LifecycleListener {
 	/**
 	 * Called when the connection status of a transport changes. See the
@@ -28,5 +31,8 @@ public interface LifecycleListener {
 	 */
 	public void onStatusChange(Transport transport, Transport.Status oldStatus,
 			Transport.Status newStatus);
+	
+	// onThreadCreate(PacketThread)
+	// onThreadDispose(PacketThread)
 
 }

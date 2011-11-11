@@ -32,7 +32,9 @@ public interface Transport extends Reporter {
 	 * The status of this transport.
 	 */
 	public static enum Status {
-		// TODO find sensible status values
+		CONNECTED,
+		CLOSED,
+		FAILED
 	}
 
 	/**
@@ -68,8 +70,10 @@ public interface Transport extends Reporter {
 	public PacketThread createThread(PacketHandler handler)
 			throws TransportException;
 
-	// TODO das eher in die TransportFactory?
-	// TODO mit transport exception 
+	// TODO das in die TransportFactory
+	// TODO mit transport exception
+	// public void setDefaultPackerHandlerFactory(PacketHandlerFactory
+	// handlerFactory) throws TransportException;
 	public void setDefaultPackerHandler(PacketHandler handler);
 
 }

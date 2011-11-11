@@ -9,7 +9,6 @@ import de.ovgu.dke.glue.api.transport.Packet;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketHandlerFactory;
 import de.ovgu.dke.glue.api.transport.PacketThread;
-import de.ovgu.dke.glue.api.transport.TransportException;
 
 public class AsyncPackageHandlerFactory implements PacketHandlerFactory {
 	
@@ -36,13 +35,13 @@ public class AsyncPackageHandlerFactory implements PacketHandlerFactory {
 
 		@Override
 		public void handle(final PacketThread packetThread, final Packet packet)
-				throws TransportException {
+				 {
 			executor.execute(new Runnable() {
 				@Override
 				public void run() {
 					try {
 						wrapped.handle(packetThread, packet);
-					} catch (TransportException e) {
+					} catch (Throwable e) {
 						// FIXME: any way to propagate this exception?
 						log.error(e.getMessage(), e);
 					}					
@@ -56,7 +55,7 @@ public class AsyncPackageHandlerFactory implements PacketHandlerFactory {
 	}
 	
 	@Override
-	public PacketHandler createPacketHandler() throws TransportException {
+	public PacketHandler createPacketHandler() throws InstantiationException {
 		return new AsyncPackageHandlerWrapper(
 				packetHandlerFactory.createPacketHandler());
 	}

@@ -27,8 +27,7 @@ public class PacketHandlerProxy implements PacketHandler {
 	}
 
 	@Override
-	public void handle(PacketThread packetThread, Packet packet)
-			throws TransportException {
+	public void handle(PacketThread packetThread, Packet packet) {
 		handler.handle(packetThread, packet);
 	}
 

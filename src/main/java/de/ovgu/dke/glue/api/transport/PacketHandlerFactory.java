@@ -21,9 +21,9 @@ public interface PacketHandlerFactory {
 	 * Create a packet handler instance.
 	 * 
 	 * @return A packet handler instance.
-	 * @throws TransportException
+	 * @throws InstantiationException
 	 *             if the packet handler cannot be created.
 	 */
-	public PacketHandler createPacketHandler() throws TransportException;
+	public PacketHandler createPacketHandler() throws InstantiationException;
 
 }
