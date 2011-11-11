@@ -14,10 +14,9 @@ import de.ovgu.dke.glue.api.transport.PacketThread;
  * (for a connection to be established) or to replace the reference to a just
  * closed real handler.
  * 
- * @author stober
+ * @author Sebastian Stober (sebastian.stober@ovgu.de)
  * 
  */
-
 public class ClosedPacketHandler implements PacketHandler {
 
 	protected static Log log = LogFactory.getLog(ClosedPacketHandler.class);

@@ -24,7 +24,8 @@ import net.jcip.annotations.ThreadSafe;
  * This class is thread safe.
  * </p>
  * 
- * @author Stefan Haun (stefan.haun@ovgu.de)
+ * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
+ *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */
 @ThreadSafe
 public class TransportRegistry {

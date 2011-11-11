@@ -6,6 +6,11 @@ import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.Transport;
 import de.ovgu.dke.glue.api.transport.TransportException;
 
+/**
+ * 
+ * @author Sebastian Stober (sebastian.stober@ovgu.de)
+ *
+ */
 public class VMTransport implements Transport {
 
 	final PacketHandlerFactory packetHandlerFactory;

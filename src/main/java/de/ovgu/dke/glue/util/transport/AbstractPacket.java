@@ -2,6 +2,13 @@ package de.ovgu.dke.glue.util.transport;
 
 import de.ovgu.dke.glue.api.transport.Packet;
 
+/**
+ * Abstract implementation of the Packet interface containing pay-load and
+ * priority. Can be used as base for any packet implementation.
+ * 
+ * @author Stefan Haun (stefan.haun@ovgu.de)
+ * 
+ */
 public abstract class AbstractPacket implements Packet {
 	private final Object payload;
 	private final Packet.Priority priority;

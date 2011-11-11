@@ -11,7 +11,8 @@ package de.ovgu.dke.glue.api.transport;
  * themselves!
  * </p>
  * 
- * @author Stefan Haun (stefan.haun@ovgu.de)
+ * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
+ *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
 // TODO AbstractTransportFactory, die die listener korrekt aufruft

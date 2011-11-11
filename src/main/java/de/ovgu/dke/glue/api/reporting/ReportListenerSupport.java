@@ -3,6 +3,10 @@ package de.ovgu.dke.glue.api.reporting;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
+ *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
+ */
 public class ReportListenerSupport implements Reporter {
 	/**
 	 * The source reporter for onReport events. As the listener support is

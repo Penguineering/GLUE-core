@@ -10,6 +10,11 @@ import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketHandlerFactory;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 
+/**
+ * 
+ * @author Sebastian Stober (sebastian.stober@ovgu.de)
+ *
+ */
 public class AsyncPackageHandlerFactory implements PacketHandlerFactory {
 	
 	protected static Log log = LogFactory.getLog(AsyncPackageHandlerFactory.class);

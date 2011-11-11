@@ -13,6 +13,11 @@ import de.ovgu.dke.glue.api.transport.Transport;
 import de.ovgu.dke.glue.api.transport.TransportException;
 import de.ovgu.dke.glue.util.transport.ClosedPacketHandler;
 
+/**
+ * 
+ * @author Sebastian Stober (sebastian.stober@ovgu.de)
+ *
+ */
 class VMPacketThread implements PacketThread {
 	
 	protected static Log log = LogFactory.getLog(VMPacketThread.class);

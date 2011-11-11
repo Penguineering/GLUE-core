@@ -1,5 +1,9 @@
 package de.ovgu.dke.glue.api.reporting;
 
+/**
+ * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
+ *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
+ */
 // be aware of thread boundaries!
 public interface ReportListener {
 	/**

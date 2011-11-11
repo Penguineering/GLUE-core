@@ -21,7 +21,8 @@ import net.jcip.annotations.NotThreadSafe;
  * the same time.
  * </p>
  * 
- * @author Stefan Haun (stefan.haun@ovgu.de)
+ * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
+ *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
 @NotThreadSafe

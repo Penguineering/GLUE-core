@@ -4,6 +4,11 @@ import de.ovgu.dke.glue.api.transport.Packet;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 
+/**
+ * 
+ * @author Sebastian Stober (sebastian.stober@ovgu.de)
+ *
+ */
 public class PacketHandlerProxy implements PacketHandler {
 
 	private PacketHandler handler;

@@ -7,7 +7,8 @@ import net.jcip.annotations.Immutable;
  * Generic exception covering problems with the transport layer.
  * </p>
  * 
- * @author Stefan Haun (stefan.haun@ovgu.de)
+ * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
+ *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
 @Immutable

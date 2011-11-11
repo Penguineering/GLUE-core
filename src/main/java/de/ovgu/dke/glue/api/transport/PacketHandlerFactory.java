@@ -12,7 +12,8 @@ import net.jcip.annotations.ThreadSafe;
  * multiple threads simultaneously.
  * </p>
  * 
- * @author Stefan Haun (stefan.haun@ovgu.de)
+ * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
+ *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
 @ThreadSafe

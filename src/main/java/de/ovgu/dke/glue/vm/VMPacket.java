@@ -2,6 +2,11 @@ package de.ovgu.dke.glue.vm;
 
 import de.ovgu.dke.glue.api.transport.Packet;
 
+/**
+ * 
+ * @author Sebastian Stober (sebastian.stober@ovgu.de)
+ *
+ */
 public class VMPacket implements Packet {
 	
 	final Object payload;

@@ -19,7 +19,8 @@ import de.ovgu.dke.glue.api.reporting.Reporter;
  * This class is thread safe.
  * </p>
  * 
- * @author Stefan Haun (stefan.haun@ovgu.de)
+ * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
+ *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
 @ThreadSafe
