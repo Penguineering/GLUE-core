@@ -48,4 +48,7 @@ public interface TransportFactory {
 	 * 
 	 */
 	public Transport createTransport(URI peer) throws TransportException;
+
+	public void setDefaultPacketHandlerFactory(PacketHandlerFactory factory)
+			throws TransportException;
 }

@@ -69,11 +69,4 @@ public interface Transport extends Reporter {
 	 */
 	public PacketThread createThread(PacketHandler handler)
 			throws TransportException;
-
-	// TODO das in die TransportFactory
-	// TODO mit transport exception
-	// public void setDefaultPackerHandlerFactory(PacketHandlerFactory
-	// handlerFactory) throws TransportException;
-	public void setDefaultPackerHandler(PacketHandler handler);
-
 }

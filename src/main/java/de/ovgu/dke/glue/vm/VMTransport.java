@@ -42,11 +42,6 @@ public class VMTransport implements Transport {
 	}
 
 	@Override
-	public void setDefaultPackerHandler(PacketHandler handler) {
-		// do we really need this? No ;-)
-	}
-
-	@Override
 	public void addReportListener(ReportListener listener) {
 		// TODO Auto-generated method stub
 
