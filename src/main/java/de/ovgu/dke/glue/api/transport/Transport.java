@@ -1,5 +1,7 @@
 package de.ovgu.dke.glue.api.transport;
 
+import de.ovgu.dke.glue.api.serialization.Serializer;
+
 
 /**
  * <p>
@@ -34,6 +36,7 @@ public interface Transport {
 	public static enum Status {
 		CREATED,
 		CONNECTED,
+		CHECKED,
 		CLOSED,
 		FAILED
 	}
@@ -54,4 +57,13 @@ public interface Transport {
 	 */
 	public PacketThread createThread(PacketHandler handler)
 			throws TransportException;
+	
+	public Serializer getSerializer();
+	
+	/**
+	 * 
+	 * @return true if communication can be guaranteed
+	 * @throws TransportException
+	 */
+	public boolean checkCapabilities() throws TransportException;
 }

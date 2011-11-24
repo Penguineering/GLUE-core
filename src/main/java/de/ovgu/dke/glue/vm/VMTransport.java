@@ -1,5 +1,6 @@
 package de.ovgu.dke.glue.vm;
 
+import de.ovgu.dke.glue.api.serialization.Serializer;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketHandlerFactory;
 import de.ovgu.dke.glue.api.transport.PacketThread;
@@ -31,5 +32,19 @@ public class VMTransport implements Transport {
 			throw new TransportException("Unable to create packet handler: "
 					+ e.getMessage(), e);
 		}
+	}
+
+
+	@Override
+	public boolean checkCapabilities() throws TransportException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public Serializer getSerializer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

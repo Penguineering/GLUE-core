@@ -18,7 +18,7 @@ import de.ovgu.dke.glue.util.transport.ClosedPacketHandler;
  * @author Sebastian Stober (sebastian.stober@ovgu.de)
  *
  */
-class VMPacketThread implements PacketThread {
+class VMPacketThread extends PacketThread {
 	
 	protected static Log log = LogFactory.getLog(VMPacketThread.class);
 
@@ -39,7 +39,7 @@ class VMPacketThread implements PacketThread {
 		this.reverse = new PacketThread() {
 			
 			@Override
-			public void send(Object payload, Priority prority)
+			public void sendSerializedPayload(Object payload, Priority prority)
 					throws TransportException {
 				sendBack(new VMPacket(payload));
 			}
@@ -80,7 +80,7 @@ class VMPacketThread implements PacketThread {
 	}
 
 	@Override
-	public void send(Object payload, Priority prority)
+	public void sendSerializedPayload(Object payload, Priority prority)
 			throws TransportException {
 		serverHandler.handle(reverse, new VMPacket(payload));
 	}

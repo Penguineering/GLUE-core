@@ -2,6 +2,9 @@ package de.ovgu.dke.glue.api.transport;
 
 import java.net.URI;
 
+import de.ovgu.dke.glue.api.serialization.SerializationException;
+import de.ovgu.dke.glue.api.serialization.Serializer;
+
 import net.jcip.annotations.NotThreadSafe;
 
 /**
@@ -26,7 +29,7 @@ import net.jcip.annotations.NotThreadSafe;
  * 
  */
 @NotThreadSafe
-public interface PacketThread {
+public abstract class PacketThread {
 	/**
 	 * Use the default packet handler.
 	 */
@@ -36,7 +39,7 @@ public interface PacketThread {
 	 * Dispose the packet thread. Incoming messages for this thread will be
 	 * rejected and sending will no longer be possible.
 	 */
-	public void dispose();
+	public abstract void dispose();
 
 	/**
 	 * Send a packet in this thread. The thread's transport is used. If this
@@ -54,10 +57,28 @@ public interface PacketThread {
 	 *             If the payload cannot be serialized or the packet could not
 	 *             be delivered to the send queue.
 	 */
-	public void send(final Object payload, final Packet.Priority prority)
-			throws TransportException;
-	
-	public Transport getTransport();
-	
-	public URI getPeer();
+	public final void send(final Object payload, final Packet.Priority priority)
+			throws TransportException {
+		final Serializer serializer = getTransport().getSerializer();
+
+		final Object p;
+		if (serializer != null)
+			try {
+				p = serializer.serialize(payload);
+			} catch (SerializationException e) {
+				throw new TransportException("Error on payload serialization: "
+						+ e.getMessage(), e);
+			}
+		else
+			p = payload;
+
+		sendSerializedPayload(p, priority);
+	}
+
+	protected abstract void sendSerializedPayload(final Object payload,
+			final Packet.Priority priority) throws TransportException;
+
+	public abstract Transport getTransport();
+
+	public abstract URI getPeer();
 }
