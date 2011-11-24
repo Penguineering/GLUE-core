@@ -75,10 +75,32 @@ public abstract class PacketThread {
 		sendSerializedPayload(p, priority);
 	}
 
+	/**
+	 * Send a serialized packet in this thread. This method needs to be
+	 * overwritten by the transport implementation.
+	 * 
+	 * @param payload
+	 *            Serialized payload to send with this message.
+	 * @param priority
+	 *            The message priority, if supported by the transport, otherwise
+	 *            this parameter may be ignored.
+	 * @throws TransportException
+	 *             if the packet cannot be delivered to the send queue.
+	 */
 	protected abstract void sendSerializedPayload(final Object payload,
 			final Packet.Priority priority) throws TransportException;
 
+	/**
+	 * Get the thread's transport.
+	 * 
+	 * @return The transport this packet thread belongs to.
+	 */
 	public abstract Transport getTransport();
 
+	/**
+	 * Get the thread's peer.
+	 * 
+	 * @return The transport peer this thread belongs to.
+	 */
 	public abstract URI getPeer();
 }

@@ -4,6 +4,7 @@ import java.net.URI;
 
 import net.jcip.annotations.ThreadSafe;
 import de.ovgu.dke.glue.api.reporting.Reporter;
+import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 
 /**
  * <p>
@@ -54,19 +55,23 @@ public interface TransportFactory extends Reporter {
 	public void setDefaultPacketHandlerFactory(PacketHandlerFactory factory)
 			throws TransportException;
 
+	public void setSerializationProvider(final SerializationProvider provider)
+			throws TransportException;
+
 	public String getDefaultRegistryKey();
 
 	public void init() throws TransportException;
 
 	public void dispose();
-	
+
 	/**
 	 * Add a life-cycle listener to this transport.
 	 * 
 	 * @param listener
 	 *            The life-cycle listener to add.
 	 */
-	public void addTransportLifecycleListener(TransportLifecycleListener listener);
+	public void addTransportLifecycleListener(
+			TransportLifecycleListener listener);
 
 	/**
 	 * Remove a life-cycle listener from this report.
@@ -74,6 +79,7 @@ public interface TransportFactory extends Reporter {
 	 * @param listener
 	 *            The life-cycle listener to remove.
 	 */
-	public void removeTransportLifecycleListener(TransportLifecycleListener listener);
+	public void removeTransportLifecycleListener(
+			TransportLifecycleListener listener);
 
 }
