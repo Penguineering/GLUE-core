@@ -59,7 +59,12 @@ public abstract class PacketThread {
 	 */
 	public final void send(final Object payload, final Packet.Priority priority)
 			throws TransportException {
-		final Serializer serializer = getTransport().getSerializer();
+		final Transport transport = getTransport();
+		if (transport == null)
+			throw new TransportException(
+					"Transport not available, PacketThread already disposed?");
+
+		final Serializer serializer = transport.getSerializer();
 
 		final Object p;
 		if (serializer != null)
