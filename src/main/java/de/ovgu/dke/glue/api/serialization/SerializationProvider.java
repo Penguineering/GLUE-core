@@ -1,6 +1,6 @@
 package de.ovgu.dke.glue.api.serialization;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * <p>
@@ -41,20 +41,26 @@ public interface SerializationProvider {
 	public static final String BINARY = "binary";
 
 	/**
-	 * Get a set of available serialization formats.
+	 * Get a list of available serialization formats. 
 	 * 
-	 * @return Set of available formats for serialization.
+	 * The list may be sorted by preference. The format that is preferred 
+	 * most should be the first item in the list.
+	 * 
+	 * @return List of available formats for serialization.
 	 */
-	public Set<String> availableFormats();
+	public List<String> availableFormats();
 
 	/**
-	 * Get the set of available schemas for a format.
+	 * Get the list of available schemas for a format.
+	 * 
+	 * The list may be sorted by preference. The schema that is preferred 
+	 * most should be the first item in the list.
 	 * 
 	 * @param format
 	 *            The format for which to return schemas.
-	 * @return Set of schemas available for the format.
+	 * @return List of schemas available for the format.
 	 */
-	public Set<String> getSchemas(String format);
+	public List<String> getSchemas(String format);
 
 	/**
 	 * Get a Serializer for a specific format and schema. Those should be
