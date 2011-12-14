@@ -129,7 +129,8 @@ public class TransportRegistry {
 	 * @param handlerFactory
 	 *            The default packet handler factory.
 	 * @param serializers
-	 *            The serialization provider.
+	 *            The serialization provider, <code>null</code> if there will be
+	 *            no serialization.
 	 * @param asDefault
 	 *            Set to <code>AS_DEFAULT</code> if this is the default factory,
 	 *            <code>NO_DEFAULT</code> otherwise.
