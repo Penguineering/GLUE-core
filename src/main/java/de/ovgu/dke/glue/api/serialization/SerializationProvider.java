@@ -20,14 +20,18 @@ import java.util.List;
  */
 public interface SerializationProvider {
 	/**
-	 * Serialization uses Java Serializable Objects. The serialized object will
-	 * be casted to <code>java.lang.Serializable</code>.
+	 * Serialization uses Java Objects, which are transferred by reference.
 	 */
 	public static final String JAVA = "java";
 	/**
-	 * The serialized object will be casted to <code>…</code>. TODO which XML
-	 * base class will we use?
+	 * Serialization uses Java Serializable Objects. The serialized object will
+	 * be casted to <code>java.lang.Serializable</code>.
 	 */
+	public static final String SERIALIZABLE = "serializable";
+	/**
+	 * The serialized object will be casted to <code>…</code>. 
+	 */
+	//TODO which XML base class will we use?
 	public static final String XML = "xml";
 	/**
 	 * The serialized object will be sent around as <code>String</code>. The
@@ -41,10 +45,10 @@ public interface SerializationProvider {
 	public static final String BINARY = "binary";
 
 	/**
-	 * Get a list of available serialization formats. 
+	 * Get a list of available serialization formats.
 	 * 
-	 * The list may be sorted by preference. The format that is preferred 
-	 * most should be the first item in the list.
+	 * The list may be sorted by preference. The format that is preferred most
+	 * should be the first item in the list.
 	 * 
 	 * @return List of available formats for serialization.
 	 */
@@ -53,8 +57,8 @@ public interface SerializationProvider {
 	/**
 	 * Get the list of available schemas for a format.
 	 * 
-	 * The list may be sorted by preference. The schema that is preferred 
-	 * most should be the first item in the list.
+	 * The list may be sorted by preference. The schema that is preferred most
+	 * should be the first item in the list.
 	 * 
 	 * @param format
 	 *            The format for which to return schemas.
