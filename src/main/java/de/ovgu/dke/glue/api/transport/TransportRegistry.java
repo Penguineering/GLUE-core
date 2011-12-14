@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import de.ovgu.dke.glue.api.serialization.SerializationProvider;
+
 import net.jcip.annotations.ThreadSafe;
 
 /**
@@ -117,8 +119,30 @@ public class TransportRegistry {
 				.getTransportFactory(reg.defaultKey);
 	}
 
+	/**
+	 * Generic loading for a transport factory, which only needs to be specified
+	 * by its class name. This way a transport implementation can be invoked
+	 * without any compile time dependency.
+	 * 
+	 * @param factoryClass
+	 *            The canonical class name of the transport factory.
+	 * @param handlerFactory
+	 *            The default packet handler factory.
+	 * @param serializers
+	 *            The serialization provider.
+	 * @param asDefault
+	 *            Set to <code>AS_DEFAULT</code> if this is the default factory,
+	 *            <code>NO_DEFAULT</code> otherwise.
+	 * @param key
+	 *            The key to use for this transport factory,
+	 *            <code>DEFAULT_KEY</code> if you do not want to specify.
+	 * @return
+	 * @throws TransportException
+	 *             if anything goes wrong during instantiation or setup
+	 */
 	public TransportFactory loadTransportFactory(String factoryClass,
-			PacketHandlerFactory handlerFactory, boolean asDefault, String key)
+			PacketHandlerFactory handlerFactory,
+			SerializationProvider serializers, boolean asDefault, String key)
 			throws TransportException {
 		try {
 			// get the class
@@ -133,6 +157,7 @@ public class TransportRegistry {
 			if (factory != null) {
 				factory.init();
 				factory.setDefaultPacketHandlerFactory(handlerFactory);
+				factory.setSerializationProvider(serializers);
 
 				// register the factory
 				final String k = (key == DEFAULT_KEY) ? factory
