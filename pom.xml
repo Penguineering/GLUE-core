@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ovgu.dke.glue</groupId>
   <artifactId>glue-core</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0</version>
   <name>glue-core</name>
   
   	<properties>
