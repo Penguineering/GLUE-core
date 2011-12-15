@@ -82,5 +82,4 @@ public interface SerializationProvider {
 	 */
 	public Serializer getSerializer(String format, String schema)
 			throws SerializationException;
-
 }

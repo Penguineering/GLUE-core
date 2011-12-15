@@ -6,7 +6,7 @@ package de.ovgu.dke.glue.api.transport;
  * </p>
  * 
  * <p>
- * Listeners are invoked in the caller's thread context and should be aware of
+ * Listeners are invoked in the caller's thread context, should be aware of
  * thread boundaries and must take care of the necessary synchronization
  * themselves!
  * </p>
@@ -16,7 +16,6 @@ package de.ovgu.dke.glue.api.transport;
  * 
  */
 // TODO AbstractTransportFactory, die die listener korrekt aufruft
-// TODO: Javadoc
 public interface TransportLifecycleListener {
 	/**
 	 * Called when the connection status of a transport changes. See the
@@ -31,8 +30,20 @@ public interface TransportLifecycleListener {
 	 */
 	public void onStatusChange(Transport transport, Transport.Status oldStatus,
 			Transport.Status newStatus);
-	
+
+	/**
+	 * Called after a packet thread is created.
+	 * 
+	 * @param pt
+	 *            The new packet thread.
+	 */
 	public void onThreadCreation(PacketThread pt);
-	
+
+	/**
+	 * Called before a packet thread is disposed.
+	 * 
+	 * @param pt
+	 *            The packet thread to be disposed.
+	 */
 	public void onThreadDisposal(PacketThread pt);
 }

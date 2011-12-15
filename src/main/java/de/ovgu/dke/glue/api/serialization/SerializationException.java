@@ -4,6 +4,11 @@ import de.ovgu.dke.glue.api.GlueException;
 import net.jcip.annotations.Immutable;
 
 /**
+ * 
+ * <p>
+ * Generic exception covering problems with the serialization.
+ * </p>
+ * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */

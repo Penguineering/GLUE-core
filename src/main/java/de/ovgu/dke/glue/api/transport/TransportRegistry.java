@@ -120,9 +120,17 @@ public class TransportRegistry {
 	}
 
 	/**
+	 * <p>
 	 * Generic loading for a transport factory, which only needs to be specified
 	 * by its class name. This way a transport implementation can be invoked
 	 * without any compile time dependency.
+	 * </p>
+	 * 
+	 * <p>
+	 * After creating an instance of the transport factory, the default packet
+	 * handler factory and the serialization provider are set. Then
+	 * <code>init()</code> is called and the factory is registered.
+	 * </p>
 	 * 
 	 * @param factoryClass
 	 *            The canonical class name of the transport factory.
@@ -195,10 +203,15 @@ public class TransportRegistry {
 
 	}
 
+	/**
+	 * Dispose all transport factory. Call to clean-up before exiting the
+	 * application or if the GLUE library is not needed anymore.
+	 */
 	public void disposeAll() {
 		for (final TransportFactory factory : this.registry.values())
 			factory.dispose();
-		registry.clear();
+		defaultKey = null;
+		registry.clear();		
 	}
 
 }

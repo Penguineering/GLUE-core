@@ -26,5 +26,4 @@ public interface PacketHandlerFactory {
 	 *             if the packet handler cannot be created.
 	 */
 	public PacketHandler createPacketHandler() throws InstantiationException;
-
 }

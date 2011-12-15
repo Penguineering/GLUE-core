@@ -24,7 +24,6 @@ import de.ovgu.dke.glue.api.serialization.SerializationProvider;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
-// TODO: Javadoc
 @ThreadSafe
 public interface TransportFactory extends Reporter {
 	/**
@@ -53,16 +52,51 @@ public interface TransportFactory extends Reporter {
 	 */
 	public Transport createTransport(URI peer) throws TransportException;
 
+	/**
+	 * Set the default packet handler factory, which is called whenever a
+	 * transport is created.
+	 * 
+	 * @param factory
+	 *            The packet handler factory.
+	 * @throws TransportException
+	 *             If the factory cannot be set.
+	 */
 	public void setDefaultPacketHandlerFactory(PacketHandlerFactory factory)
 			throws TransportException;
 
+	/**
+	 * Set the serialization provider for transports.
+	 * 
+	 * @param provider
+	 *            The serialization provider.
+	 * @throws TransportException
+	 *             If the serialization provider cannot be set.
+	 */
 	public void setSerializationProvider(final SerializationProvider provider)
 			throws TransportException;
 
+	/**
+	 * Get the default key for this registry. While the user is allowed to use a
+	 * different key, this one is used for generic initialization (such was in
+	 * the TransportRegistry) or if the user does not intent to use multiple
+	 * instances of a transport implementation.
+	 * 
+	 * @return The default key for the transport factory implementation.
+	 */
 	public String getDefaultRegistryKey();
 
+	/**
+	 * Initialize the transport factory and bring it to a state where packets
+	 * can be sent and received.
+	 * 
+	 * @throws TransportException
+	 *             if the initialization fails.
+	 */
 	public void init() throws TransportException;
 
+	/**
+	 * Dispose the transport factory and free all resources.
+	 */
 	public void dispose();
 
 	/**
