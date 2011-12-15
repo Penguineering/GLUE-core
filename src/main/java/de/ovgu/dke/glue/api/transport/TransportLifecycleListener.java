@@ -16,6 +16,7 @@ package de.ovgu.dke.glue.api.transport;
  * 
  */
 // TODO AbstractTransportFactory, die die listener korrekt aufruft
+// TODO: Javadoc
 public interface TransportLifecycleListener {
 	/**
 	 * Called when the connection status of a transport changes. See the

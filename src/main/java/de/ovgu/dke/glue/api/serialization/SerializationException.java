@@ -1,5 +1,6 @@
 package de.ovgu.dke.glue.api.serialization;
 
+import de.ovgu.dke.glue.api.GlueException;
 import net.jcip.annotations.Immutable;
 
 /**
@@ -7,7 +8,7 @@ import net.jcip.annotations.Immutable;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */
 @Immutable
-public class SerializationException extends Exception {
+public class SerializationException extends GlueException {
 	private static final long serialVersionUID = 4621980971205449774L;
 
 	public SerializationException() {

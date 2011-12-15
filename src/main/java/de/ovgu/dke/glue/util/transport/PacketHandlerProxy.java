@@ -9,6 +9,7 @@ import de.ovgu.dke.glue.api.transport.PacketThread;
  * @author Sebastian Stober (sebastian.stober@ovgu.de)
  *
  */
+// TODO: Javadoc
 public class PacketHandlerProxy implements PacketHandler {
 
 	private PacketHandler handler;

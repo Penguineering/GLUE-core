@@ -99,6 +99,9 @@ public interface Transport {
 	 * decode the provided packet. However, this method allows to shift the
 	 * point-of-failure.
 	 * </p>
+	 * <p>
+	 * Note: This method may block for some time!
+	 * </p>
 	 * 
 	 * @return true if serialization compatibility is given, otherwise false.
 	 *         Communication may still succeed!

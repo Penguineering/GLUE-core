@@ -1,5 +1,6 @@
 package de.ovgu.dke.glue.api.transport;
 
+import de.ovgu.dke.glue.api.GlueException;
 import net.jcip.annotations.Immutable;
 
 /**
@@ -12,7 +13,7 @@ import net.jcip.annotations.Immutable;
  * 
  */
 @Immutable
-public class TransportException extends Exception {
+public class TransportException extends GlueException {
 	private static final long serialVersionUID = 1095168616944463901L;
 
 	public TransportException() {

@@ -24,6 +24,7 @@ import de.ovgu.dke.glue.api.serialization.SerializationProvider;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
+// TODO: Javadoc
 @ThreadSafe
 public interface TransportFactory extends Reporter {
 	/**

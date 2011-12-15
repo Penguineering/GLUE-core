@@ -15,6 +15,8 @@ import de.ovgu.dke.glue.api.transport.PacketThread;
  * @author Sebastian Stober (sebastian.stober@ovgu.de)
  *
  */
+// TODO: Javadoc
+// TODO: implement reportimg
 public class AsyncPackageHandlerFactory implements PacketHandlerFactory {
 	
 	protected static Log log = LogFactory.getLog(AsyncPackageHandlerFactory.class);
@@ -47,7 +49,7 @@ public class AsyncPackageHandlerFactory implements PacketHandlerFactory {
 					try {
 						wrapped.handle(packetThread, packet);
 					} catch (Throwable e) {
-						// FIXME: any way to propagate this exception?
+						// FIXME: reporting
 						log.error(e.getMessage(), e);
 					}					
 			}});			

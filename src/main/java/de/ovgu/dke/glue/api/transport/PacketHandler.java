@@ -30,7 +30,7 @@ public interface PacketHandler {
 	 * Handle an incoming packet from the specified packet thread.
 	 * 
 	 * @param packetThread
-	 *            The packet thread in which the packet occured.
+	 *            The packet thread in which the packet occurred.
 	 * @param packet
 	 *            The incoming packet.
 	 */

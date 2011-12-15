@@ -156,9 +156,9 @@ public class TransportRegistry {
 
 			// some setup
 			if (factory != null) {
-				factory.init();
 				factory.setDefaultPacketHandlerFactory(handlerFactory);
 				factory.setSerializationProvider(serializers);
+				factory.init();
 
 				// register the factory
 				final String k = (key == DEFAULT_KEY) ? factory
@@ -198,6 +198,7 @@ public class TransportRegistry {
 	public void disposeAll() {
 		for (final TransportFactory factory : this.registry.values())
 			factory.dispose();
+		registry.clear();
 	}
 
 }
