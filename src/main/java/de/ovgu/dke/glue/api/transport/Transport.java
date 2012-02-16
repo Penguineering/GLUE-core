@@ -63,26 +63,32 @@ public interface Transport {
 	 * transport.
 	 * </p>
 	 * 
+	 * @param schema
+	 *            The serialization schema for this thread.
 	 * @param handler
 	 *            The packet handler to use for incoming packets. Set to
 	 *            <code>null</code> or <code>PacketThread.DEFAULT_HANDLER</code>
-	 *            to use the factory default handler.
+	 *            to use the factory default handler for the given schema.
 	 * @return A new packet thread.
 	 * @throws TransportException
 	 *             if the thread could not be created.
 	 */
-	public PacketThread createThread(PacketHandler handler)
-			throws TransportException;
+	public PacketThread createThread(final String schema,
+			final PacketHandler handler) throws TransportException;
 
 	/**
 	 * Get the serializer for this transport. Serializers are either negotiated
 	 * using capability packets or assumed, in which case packet sending may
-	 * fail due to serialization problems.
+	 * fail due to serialization problems. A transport offers serializers for
+	 * different schemas. The format is determined by the transport
+	 * implementation after capabilities negotiation.
 	 * 
+	 * @param schema
+	 *            The target schema of the serializer.
 	 * @return The selected serializer or
 	 *         <code>null<code> if serialization is not necessary.
 	 */
-	public Serializer getSerializer();
+	public Serializer getSerializer(final String schema);
 
 	/**
 	 * <p>

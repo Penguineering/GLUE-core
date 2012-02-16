@@ -24,6 +24,13 @@ import net.jcip.annotations.NotThreadSafe;
  * the same time.
  * </p>
  * 
+ * <p>
+ * Serializers are bound to a packet thread, i.e. each packet thread may have a
+ * different serialization schema (which must be assigned upon creation),
+ * however, the serializer must be available in the Transport via the
+ * SerializationProvider.
+ * </p>
+ * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
@@ -34,6 +41,35 @@ public abstract class PacketThread {
 	 * Use the default packet handler.
 	 */
 	public static PacketHandler DEFAULT_HANDLER = null;
+
+	/**
+	 * Use the default schema.
+	 */
+	public static String NO_SERALIZATION = null;
+
+	private final String schema;
+
+	/**
+	 * Create a packet thread with a specific serialization schema.
+	 * 
+	 * @param schema
+	 *            The serialization schema. Using <code>null</code> disables
+	 *            serialization for this thread.
+	 */
+	public PacketThread(final String schema) {
+		this.schema = schema;
+	}
+
+	/**
+	 * Get the serialization schema for this packet thread, which must be set
+	 * upon creation and cannot be changed.
+	 * 
+	 * @return The serialization schema. <code>null</code> if serialization is
+	 *         disabled.
+	 */
+	public final String getSerializationSchema() {
+		return schema;
+	}
 
 	/**
 	 * Dispose the packet thread. Incoming messages for this thread will be
@@ -64,7 +100,8 @@ public abstract class PacketThread {
 			throw new TransportException(
 					"Transport not available, PacketThread already disposed?");
 
-		final Serializer serializer = transport.getSerializer();
+		final Serializer serializer = getSerializationSchema() == null ? null
+				: transport.getSerializer(getSerializationSchema());
 
 		final Object p;
 		if (serializer != null)

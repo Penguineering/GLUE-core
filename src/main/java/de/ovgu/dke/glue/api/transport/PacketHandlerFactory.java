@@ -21,9 +21,12 @@ public interface PacketHandlerFactory {
 	/**
 	 * Create a packet handler instance.
 	 * 
+	 * @param schema
+	 *            The serialization schema used in this thread
 	 * @return A packet handler instance.
 	 * @throws InstantiationException
 	 *             if the packet handler cannot be created.
 	 */
-	public PacketHandler createPacketHandler() throws InstantiationException;
+	public PacketHandler createPacketHandler(final String schema)
+			throws InstantiationException;
 }
