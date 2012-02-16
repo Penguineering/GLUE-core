@@ -1,6 +1,7 @@
 package de.ovgu.dke.glue.api.transport;
 
 import java.net.URI;
+import java.util.Properties;
 
 import net.jcip.annotations.ThreadSafe;
 import de.ovgu.dke.glue.api.reporting.Reporter;
@@ -89,10 +90,13 @@ public interface TransportFactory extends Reporter {
 	 * Initialize the transport factory and bring it to a state where packets
 	 * can be sent and received.
 	 * 
+	 * @param config
+	 *            Implementation specific configuration, may be
+	 *            <code>null</code>.
 	 * @throws TransportException
 	 *             if the initialization fails.
 	 */
-	public void init() throws TransportException;
+	public void init(final Properties config) throws TransportException;
 
 	/**
 	 * Dispose the transport factory and free all resources.

@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -134,6 +135,9 @@ public class TransportRegistry {
 	 * 
 	 * @param factoryClass
 	 *            The canonical class name of the transport factory.
+	 * @param config
+	 *            A properties instance which will be handed to the
+	
 	 * @param handlerFactory
 	 *            The default packet handler factory.
 	 * @param serializers
@@ -150,7 +154,7 @@ public class TransportRegistry {
 	 *             if anything goes wrong during instantiation or setup
 	 */
 	public TransportFactory loadTransportFactory(String factoryClass,
-			PacketHandlerFactory handlerFactory,
+			Properties config, PacketHandlerFactory handlerFactory,
 			SerializationProvider serializers, boolean asDefault, String key)
 			throws TransportException {
 		try {
@@ -166,7 +170,7 @@ public class TransportRegistry {
 			if (factory != null) {
 				factory.setDefaultPacketHandlerFactory(handlerFactory);
 				factory.setSerializationProvider(serializers);
-				factory.init();
+				factory.init(config);
 
 				// register the factory
 				final String k = (key == DEFAULT_KEY) ? factory
@@ -211,7 +215,7 @@ public class TransportRegistry {
 		for (final TransportFactory factory : this.registry.values())
 			factory.dispose();
 		defaultKey = null;
-		registry.clear();		
+		registry.clear();
 	}
 
 }
