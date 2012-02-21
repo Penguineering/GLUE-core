@@ -8,9 +8,6 @@ Copyright 2012 Stefan Haun, Thomas Low, Sebastian Stober, Andreas Nürnberger
 
 The following libraries are included:
 
-* Apache Commons Logging
-
-Component's NOTICE.txt file:
 Apache Commons Logging
 Copyright 2003-2007 The Apache Software Foundation
 
@@ -19,7 +16,7 @@ The Apache Software Foundation (http://www.apache.org/).
 
 
 
-* net.jcip.annotations
+net.jcip.annotations
 
 This software is copyright (c) 2005 Brian Goetz and Tim Peierls and is released
 under the Creative Commons Attribution License 
