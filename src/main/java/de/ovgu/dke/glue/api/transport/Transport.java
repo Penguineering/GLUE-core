@@ -78,24 +78,8 @@ public interface Transport {
 		FAILED
 	}
 
-	/**
-	 * <p>
-	 * Create a packet thread to send and receive packets from the peer of this
-	 * transport.
-	 * </p>
-	 * 
-	 * @param schema
-	 *            The serialization schema for this thread.
-	 * @param handler
-	 *            The packet handler to use for incoming packets. Set to
-	 *            <code>null</code> or <code>PacketThread.DEFAULT_HANDLER</code>
-	 *            to use the factory default handler for the given schema.
-	 * @return A new packet thread.
-	 * @throws TransportException
-	 *             if the thread could not be created.
-	 */
-	public PacketThread createThread(final String schema,
-			final PacketHandler handler) throws TransportException;
+	public Connection createConnection(final String schema)
+			throws TransportException;
 
 	/**
 	 * Get the serializer for this transport. Serializers are either negotiated
