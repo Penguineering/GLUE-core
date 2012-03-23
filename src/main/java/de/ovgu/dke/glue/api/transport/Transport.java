@@ -78,7 +78,27 @@ public interface Transport {
 		FAILED
 	}
 
-	public Connection createConnection(final String schema)
+	/**
+	 * <p>
+	 * Get (or, if necessary, create) the connection on this transport for a
+	 * specific connection schema. A transport can hold multiple connections,
+	 * however each connection is assigned a schema, which determines the
+	 * default packet handler and the Serializer.
+	 * </p>
+	 * 
+	 * <p>
+	 * The transport can check the schema availability on the peer side, but
+	 * does not need to. However, if the check is omitted, an error will occur
+	 * on sending the first packet over the connection.
+	 * </p>
+	 * 
+	 * @param schema
+	 *            The connection schema.
+	 * @return a Connection
+	 * @throws TransportException
+	 *             if the connection cannot be created
+	 */
+	public Connection getConnection(final String schema)
 			throws TransportException;
 
 	/**
@@ -94,30 +114,4 @@ public interface Transport {
 	 *         <code>null<code> if serialization is not necessary.
 	 */
 	public Serializer getSerializer(final String schema);
-
-	/**
-	 * <p>
-	 * Check whether the peers in a transport are able to communicate with each
-	 * other, i.e. they have matching serialization methods and schemas.
-	 * </p>
-	 * <p>
-	 * Calling this method is optional, if left out a TransportException may
-	 * occur when sending the first packet.
-	 * </p>
-	 * <p>
-	 * If the serialization compatibility cannot be ensured, communication may
-	 * still work, e.g. if the peer cannot handle capabilities but is able to
-	 * decode the provided packet. However, this method allows to shift the
-	 * point-of-failure.
-	 * </p>
-	 * <p>
-	 * Note: This method may block for some time!
-	 * </p>
-	 * 
-	 * @return true if serialization compatibility is given, otherwise false.
-	 *         Communication may still succeed!
-	 * @throws TransportException
-	 *             if negotiation packets cannot be sent.
-	 */
-	public boolean checkCapabilities() throws TransportException;
 }

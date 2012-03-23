@@ -2,6 +2,8 @@ package de.ovgu.dke.glue.api.transport;
 
 import java.net.URI;
 
+import net.jcip.annotations.ThreadSafe;
+
 import de.ovgu.dke.glue.api.serialization.SerializationException;
 import de.ovgu.dke.glue.api.serialization.Serializer;
 
@@ -13,10 +15,13 @@ import de.ovgu.dke.glue.api.serialization.Serializer;
  * SerializationProvider.
  * </p>
  * 
+ * <p>The Connection may be used in multiple threads and must be thread safe!</p>
+ * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
+@ThreadSafe
 public abstract class Connection {
 
 	/**
@@ -138,5 +143,30 @@ public abstract class Connection {
 	 * @return The peer this connection belongs to.
 	 */
 	public abstract URI getPeer();
-
+	
+	/**
+	 * <p>
+	 * Check whether the peers in a connection are able to communicate with each
+	 * other, i.e. they have matching serialization methods and schemas.
+	 * </p>
+	 * <p>
+	 * Calling this method is optional, if left out a TransportException may
+	 * occur when sending the first packet.
+	 * </p>
+	 * <p>
+	 * If the serialization compatibility cannot be ensured, communication may
+	 * still work, e.g. if the peer cannot handle capabilities but is able to
+	 * decode the provided packet. However, this method allows to shift the
+	 * point-of-failure.
+	 * </p>
+	 * <p>
+	 * Note: This method may block for some time!
+	 * </p>
+	 * 
+	 * @return true if serialization compatibility is given, otherwise false.
+	 *         Communication may still succeed!
+	 * @throws TransportException
+	 *             if negotiation packets cannot be sent.
+	 */
+	public abstract boolean checkCapabilities() throws TransportException;
 }
