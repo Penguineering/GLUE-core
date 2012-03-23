@@ -24,26 +24,24 @@ import de.ovgu.dke.glue.api.serialization.Serializer;
 @ThreadSafe
 public abstract class Connection {
 
-	/**
-	 * Use the default schema.
-	 */
-	public static String NO_SERALIZATION = null;
-
 	private final String connection_schema;
 
 	/**
 	 * Create a connection with a specific serialization schema.
 	 * 
 	 * @param schema
-	 *            The serialization schema. Using <code>null</code> disables
+	 *            The connection schema. Using <code>null</code> disables
 	 *            serialization for this connection.
 	 */
 	public Connection(final String schema) {
+		if (schema == null)
+			throw new NullPointerException("The connection schema may not be null!");
+		
 		this.connection_schema = schema;
 	}
 
 	/**
-	 * Get the serialization schema for this connection, which must be set upon
+	 * Get the connection schema for this connection, which must be set upon
 	 * creation and cannot be changed.
 	 * 
 	 * @return The serialization schema. <code>null</code> if serialization is
