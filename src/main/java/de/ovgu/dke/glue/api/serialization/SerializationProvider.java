@@ -39,6 +39,8 @@ import java.util.List;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
+// TODO at least an addSerializer method should be available via interface ->
+// better for testing and uniform access to all providers possible
 public interface SerializationProvider {
 	/**
 	 * Serialization uses Java Objects, which are transferred by reference.
@@ -50,9 +52,9 @@ public interface SerializationProvider {
 	 */
 	public static final String SERIALIZABLE = "serializable";
 	/**
-	 * The serialized object will be casted to <code>…</code>. 
+	 * The serialized object will be casted to <code>…</code>.
 	 */
-	//TODO which XML base class will we use?
+	// TODO which XML base class will we use?
 	public static final String XML = "xml";
 	/**
 	 * The serialized object will be sent around as <code>String</code>. The
