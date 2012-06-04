@@ -78,31 +78,17 @@ public interface SerializationProvider {
 	public List<String> availableFormats();
 
 	/**
-	 * Get the list of available schemas for a format.
-	 * 
-	 * The list may be sorted by preference. The schema that is preferred most
-	 * should be the first item in the list.
-	 * 
-	 * @param format
-	 *            The format for which to return schemas.
-	 * @return List of schemas available for the format.
-	 */
-	public List<String> getSchemas(String format);
-
-	/**
 	 * Get a Serializer for a specific format and schema. Those should be
 	 * negotiated for the channel.
 	 * 
 	 * @param format
 	 *            The format to serialize to.
-	 * @param schema
-	 *            The schema to use for serialization.
 	 * @return A Serializer or <code>null</code> if no serialization is
 	 *         necessary.
 	 * @throws SerializationException
 	 *             if format or schema are unknown of the serializer cannot be
 	 *             created.
 	 */
-	public Serializer getSerializer(String format, String schema)
+	public Serializer getSerializer(String format)
 			throws SerializationException;
 }

@@ -3,8 +3,8 @@ package de.ovgu.dke.glue.api.transport;
 import java.net.URI;
 
 import net.jcip.annotations.ThreadSafe;
-
 import de.ovgu.dke.glue.api.serialization.SerializationException;
+import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 import de.ovgu.dke.glue.api.serialization.Serializer;
 
 /**
@@ -15,7 +15,9 @@ import de.ovgu.dke.glue.api.serialization.Serializer;
  * SerializationProvider.
  * </p>
  * 
- * <p>The Connection may be used in multiple threads and must be thread safe!</p>
+ * <p>
+ * The Connection may be used in multiple threads and must be thread safe!
+ * </p>
  * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
@@ -35,8 +37,9 @@ public abstract class Connection {
 	 */
 	public Connection(final String schema) {
 		if (schema == null)
-			throw new NullPointerException("The connection schema may not be null!");
-		
+			throw new NullPointerException(
+					"The connection schema may not be null!");
+
 		this.connection_schema = schema;
 	}
 
@@ -50,6 +53,16 @@ public abstract class Connection {
 	public final String getConnectionSchema() {
 		return connection_schema;
 	}
+
+	/**
+	 * Get the connection's serialization format. The value depends on the
+	 * transport's capabilities, but may vary between connections if a transport
+	 * supports more than one format.
+	 * 
+	 * @return The serialization format according to the formats in
+	 *         {@link SerializationProvider}.
+	 */
+	public abstract String getSerializationFormat();
 
 	/**
 	 * <p>
@@ -100,23 +113,34 @@ public abstract class Connection {
 			throw new TransportException(
 					"Transport not available, connection already disposed?");
 
-		final String conn_s = getConnectionSchema();
+		try {
+			// retrieve the schema record
+			final SchemaRecord record = SchemaRegistry.getInstance().getRecord(
+					getConnectionSchema());
+			if (record == null)
+				throw new TransportException(
+						"The connection uses an unknown schema!");
 
-		final Serializer serializer = conn_s == null ? null : transport
-				.getSerializer(conn_s);
+			// find the serializer according to the connection's format
+			final SerializationProvider prov = record
+					.getSerializationProvider();
 
-		final Object p;
-		if (serializer != null)
-			try {
+			final Serializer serializer = prov == null ? null : prov
+					.getSerializer(this.getSerializationFormat());
+
+			// serialize the payload
+			final Object p;
+			if (serializer != null)
 				p = serializer.serialize(payload);
-			} catch (SerializationException e) {
-				throw new TransportException("Error on payload serialization: "
-						+ e.getMessage(), e);
-			}
-		else
-			p = payload;
+			else
+				p = payload;
 
-		sendSerializedPayload(pt, p, priority);
+			// send the serialized payload
+			sendSerializedPayload(pt, p, priority);
+		} catch (SerializationException e) {
+			throw new TransportException("Error on payload serialization: "
+					+ e.getMessage(), e);
+		}
 	}
 
 	/**
@@ -141,7 +165,7 @@ public abstract class Connection {
 	 * @return The peer this connection belongs to.
 	 */
 	public abstract URI getPeer();
-	
+
 	/**
 	 * <p>
 	 * Check whether the peers in a connection are able to communicate with each

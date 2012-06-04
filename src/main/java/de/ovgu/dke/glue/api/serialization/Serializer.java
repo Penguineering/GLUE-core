@@ -26,7 +26,7 @@ import net.jcip.annotations.NotThreadSafe;
 /**
  * <p>
  * Payload serializer. Called to convert a payload object into a representation
- * the transport can send and convert it back to the original object type on
+ * the transport can send and convert back to the original object type on
  * receipt.
  * </p>
  * 
@@ -48,26 +48,12 @@ public interface Serializer {
 	 * </p>
 	 * <p>
 	 * The serializer must guarantee to return a type matching the specification
-	 * of the format.
+	 * of the format in the {@link SerializationProvider}.
 	 * </p>
 	 * 
 	 * @return A String specifying the result class type.
 	 */
 	public String getFormat();
-
-	/**
-	 * <p>
-	 * The schema identifies the serializer. The transport layer looks for a
-	 * matching serializer at the peer's side to deserialize the object. If such
-	 * a schema cannot be found, the communication will fail.
-	 * </p>
-	 * <p>
-	 * The schema should be a valid URI.
-	 * </p>
-	 * 
-	 * @return The schema identifier.
-	 */
-	public String getSchema();
 
 	/**
 	 * Serialize a payload object to be sent over the transport.

@@ -26,7 +26,6 @@ import java.util.Properties;
 
 import net.jcip.annotations.ThreadSafe;
 import de.ovgu.dke.glue.api.reporting.Reporter;
-import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 
 /**
  * <p>
@@ -73,29 +72,6 @@ public interface TransportFactory extends Reporter {
 	 * 
 	 */
 	public Transport createTransport(URI peer) throws TransportException;
-
-	/**
-	 * Set the default packet handler factory, which is called whenever a
-	 * transport is created.
-	 * 
-	 * @param factory
-	 *            The packet handler factory.
-	 * @throws TransportException
-	 *             If the factory cannot be set.
-	 */
-	public void setDefaultPacketHandlerFactory(PacketHandlerFactory factory)
-			throws TransportException;
-
-	/**
-	 * Set the serialization provider for transports.
-	 * 
-	 * @param provider
-	 *            The serialization provider.
-	 * @throws TransportException
-	 *             If the serialization provider cannot be set.
-	 */
-	public void setSerializationProvider(final SerializationProvider provider)
-			throws TransportException;
 
 	/**
 	 * Get the default key for this registry. While the user is allowed to use a

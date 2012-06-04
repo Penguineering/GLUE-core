@@ -29,8 +29,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import de.ovgu.dke.glue.api.serialization.SerializationProvider;
-
 import net.jcip.annotations.ThreadSafe;
 
 /**
@@ -157,13 +155,8 @@ public class TransportRegistry {
 	 * @param factoryClass
 	 *            The canonical class name of the transport factory.
 	 * @param config
-	 *            A properties instance which will be handed to the
-	
-	 * @param handlerFactory
-	 *            The default packet handler factory.
-	 * @param serializers
-	 *            The serialization provider, <code>null</code> if there will be
-	 *            no serialization.
+	 *            A properties instance which will be handed to the transport
+	 *            implementation.
 	 * @param asDefault
 	 *            Set to <code>AS_DEFAULT</code> if this is the default factory,
 	 *            <code>NO_DEFAULT</code> otherwise.
@@ -175,8 +168,7 @@ public class TransportRegistry {
 	 *             if anything goes wrong during instantiation or setup
 	 */
 	public TransportFactory loadTransportFactory(String factoryClass,
-			Properties config, PacketHandlerFactory handlerFactory,
-			SerializationProvider serializers, boolean asDefault, String key)
+			Properties config, boolean asDefault, String key)
 			throws TransportException {
 		try {
 			// get the class
@@ -189,8 +181,6 @@ public class TransportRegistry {
 
 			// some setup
 			if (factory != null) {
-				factory.setDefaultPacketHandlerFactory(handlerFactory);
-				factory.setSerializationProvider(serializers);
 				factory.init(config);
 
 				// register the factory

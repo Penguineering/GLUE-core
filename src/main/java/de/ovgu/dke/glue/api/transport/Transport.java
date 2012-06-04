@@ -21,8 +21,6 @@
  */
 package de.ovgu.dke.glue.api.transport;
 
-import de.ovgu.dke.glue.api.serialization.Serializer;
-
 /**
  * <p>
  * A Transport represents a connection to another peer. Dependent on the
@@ -83,7 +81,8 @@ public interface Transport {
 	 * Get (or, if necessary, create) the connection on this transport for a
 	 * specific connection schema. A transport can hold multiple connections,
 	 * however each connection is assigned a schema, which determines the
-	 * default packet handler and the Serializer.
+	 * default packet handler and the Serializer as registered in the
+	 * {@link SchemaRegistry}.
 	 * </p>
 	 * 
 	 * <p>
@@ -100,18 +99,4 @@ public interface Transport {
 	 */
 	public Connection getConnection(final String schema)
 			throws TransportException;
-
-	/**
-	 * Get the serializer for this transport. Serializers are either negotiated
-	 * using capability packets or assumed, in which case packet sending may
-	 * fail due to serialization problems. A transport offers serializers for
-	 * different schemas. The format is determined by the transport
-	 * implementation after capabilities negotiation.
-	 * 
-	 * @param schema
-	 *            The target schema of the serializer.
-	 * @return The selected serializer or
-	 *         <code>null<code> if serialization is not necessary.
-	 */
-	public Serializer getSerializer(final String schema);
 }
