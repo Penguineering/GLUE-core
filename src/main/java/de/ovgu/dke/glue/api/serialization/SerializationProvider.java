@@ -23,6 +23,8 @@ package de.ovgu.dke.glue.api.serialization;
 
 import java.util.List;
 
+import net.jcip.annotations.Immutable;
+
 /**
  * <p>
  * Interface to provide serializers for different serialization methods. The
@@ -39,6 +41,7 @@ import java.util.List;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
+@Immutable
 public interface SerializationProvider {
 	/**
 	 * Serialization uses Java Objects, which are transferred by reference.
