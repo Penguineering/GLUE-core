@@ -39,8 +39,6 @@ import java.util.List;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
-// TODO at least an addSerializer method should be available via interface ->
-// better for testing and uniform access to all providers possible
 public interface SerializationProvider {
 	/**
 	 * Serialization uses Java Objects, which are transferred by reference.
