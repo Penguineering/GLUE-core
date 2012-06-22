@@ -73,7 +73,7 @@ public interface Packet {
 	 * Get the pay-load of this packet. There is no further specification about
 	 * what the packet must contain.
 	 * 
-	 * @return The packet's pay-load or <code>null</code> if the packet did not
+	 * @return The packet's pay-load or {@code null} if the packet did not
 	 *         contain any.
 	 */
 	Object getPayload();
@@ -92,8 +92,8 @@ public interface Packet {
 	 * 
 	 * @param key
 	 *            The key of the attribute which shall be retrieved.
-	 * @return The attribute value or <code>null</code> if there is no value for
-	 *         the key.
+	 * @return The attribute value or {@code null} if there is no value for the
+	 *         key.
 	 */
 	Object getAttribute(String key);
 }

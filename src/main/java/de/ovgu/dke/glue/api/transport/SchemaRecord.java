@@ -31,7 +31,10 @@ import de.ovgu.dke.glue.api.serialization.SerializationProvider;
  * </p>
  * 
  * <p>
- * This class is immutable and thread safe.
+ * This class is immutable and thread safe. However, immutablility only refers
+ * to the references, i.e. the packet handler factory and serialization provider
+ * could be changed, depending on their implementation, although the contract
+ * states otherwise.
  * </p>
  * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
@@ -43,29 +46,34 @@ public class SchemaRecord {
 	 * Create a schema record
 	 * 
 	 * @param schema
-	 *            The schema to be registered, which should be a valid URI.
+	 *            The schema to be registered, which should be a valid URI and
+	 *            may not be {@code null} or empty
 	 * @param packetHandlerFactory
-	 *            packet handler factory for this schema
+	 *            packet handler factory for this schema which may not be
+	 *            {@code null}
 	 * @param serializationProvider
-	 *            serialization provider for this schema
+	 *            serialization provider for this schema which may not be
+	 *            {@code null}
 	 * @return a schema record instance
+	 * @throws NullPointerException
+	 *             if one of the parameters is {@code null}
 	 * @throws IllegalArgumentException
-	 *             if a valid instance cannot be created
+	 *             if the schema is an empty String.
 	 */
 	public static SchemaRecord valueOf(String schema,
 			PacketHandlerFactory packetHandlerFactory,
-			SerializationProvider serializationProvider)
-			throws IllegalArgumentException {
-		if (schema == null || schema.isEmpty())
-			throw new IllegalArgumentException(
-					"Schema must be provided and may not be empty.");
+			SerializationProvider serializationProvider) {
+		if (schema == null)
+			throw new NullPointerException("Schema must be provided.");
+		if (schema.isEmpty())
+			throw new IllegalArgumentException("Schema may not be empty.");
 
 		if (packetHandlerFactory == null)
-			throw new IllegalArgumentException(
+			throw new NullPointerException(
 					"Packet Handler Factory must be provided.");
 
 		if (serializationProvider == null)
-			throw new IllegalArgumentException(
+			throw new NullPointerException(
 					"Serialization Provider must be provided.");
 
 		return new SchemaRecord(schema, packetHandlerFactory,
@@ -101,7 +109,7 @@ public class SchemaRecord {
 	/**
 	 * Get the schema of this record
 	 * 
-	 * @return record schema string
+	 * @return record schema string; not {@code null}
 	 */
 	public String getSchema() {
 		return schema;
@@ -110,7 +118,8 @@ public class SchemaRecord {
 	/**
 	 * get the packet handler factory for this record
 	 * 
-	 * @return the packet handler factory for this record's schema
+	 * @return the packet handler factory for this record's schema; not
+	 *         {@code null}
 	 */
 	public PacketHandlerFactory getPacketHandlerFactory() {
 		return packetHandlerFactory;
@@ -119,7 +128,8 @@ public class SchemaRecord {
 	/**
 	 * get the serialization provider for this record
 	 * 
-	 * @return the serialization provider for this record's schema
+	 * @return the serialization provider for this record's schema; not
+	 *         {@code null}
 	 */
 	public SerializationProvider getSerializationProvider() {
 		return serializationProvider;

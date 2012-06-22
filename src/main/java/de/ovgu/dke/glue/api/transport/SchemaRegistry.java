@@ -76,10 +76,9 @@ public class SchemaRegistry {
 	 * Register a schema, overwrites existing schema records.
 	 * 
 	 * @param record
-	 *            The schema record to register, which may not be
-	 *            <code>null</code>.
+	 *            The schema record to register, which may not be {@code null}
 	 * @throws NullPointerException
-	 *             if the record is <code>null</code>
+	 *             if the record is {@code null}
 	 */
 	public void registerSchemaRecord(final SchemaRecord record) {
 		registry.put(record.getSchema(), record);
@@ -88,7 +87,7 @@ public class SchemaRegistry {
 	/**
 	 * Get all available schemas.
 	 * 
-	 * @return the Set of registered schemas.
+	 * @return a unmodifiable Set of registered schemas.
 	 */
 	public Set<String> getAvailableSchemas() {
 		return Collections.unmodifiableSet(registry.keySet());
@@ -99,8 +98,9 @@ public class SchemaRegistry {
 	 * 
 	 * @param schema
 	 *            The record's schema.
-	 * @return The schema record or <code>null</code> if the schema is not
-	 *         available.
+	 * @return The schema record or {@code null} if the schema is not available.
+	 * @throws NullPointerException
+	 *             if the schema parameter is {@code null}
 	 */
 	public SchemaRecord getRecord(final String schema) {
 		return registry.get(schema);
@@ -111,9 +111,11 @@ public class SchemaRegistry {
 	 * 
 	 * @param schema
 	 *            The record's schema.
-	 * @return A packet handler factory or <code>null</code> if the schema is
-	 *         not registered or the record does not contain a packet handler
-	 *         factory (the latter, however, should never happen).
+	 * @return A packet handler factory or {@code null} if the schema is not
+	 *         registered or the record does not contain a packet handler
+	 *         factory (the latter, however, should never happen)
+	 * @throws NullPointerException
+	 *             if the schema parameter is {@code null}
 	 */
 	public PacketHandlerFactory getPacketHandlerFactory(final String schema) {
 		final SchemaRecord record = getRecord(schema);
@@ -128,6 +130,8 @@ public class SchemaRegistry {
 	 * @return A packet handler factory or <code>null</code> if the schema is
 	 *         not registered or the record does not contain a serialization
 	 *         provider (the latter, however, should never happen).
+	 * @throws NullPointerException
+	 *             if the schema parameter is {@code null}
 	 */
 	public SerializationProvider getSerializationProvider(final String schema) {
 		final SchemaRecord record = getRecord(schema);

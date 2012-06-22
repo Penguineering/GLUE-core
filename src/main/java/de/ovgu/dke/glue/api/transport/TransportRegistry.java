@@ -21,8 +21,6 @@
  */
 package de.ovgu.dke.glue.api.transport;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
@@ -84,8 +82,15 @@ public class TransportRegistry {
 	 *            Key for accessing the transport factory.
 	 * @param factory
 	 *            Transport factory to be registered.
+	 * @throws NullPointerException
+	 *             if key or factory parameter are {@code null}
 	 */
 	public void registerTransportFactory(String key, TransportFactory factory) {
+		if (key == null)
+			throw new NullPointerException("Transport key may not be null!");
+		if (factory == null)
+			throw new NullPointerException("Factory may not be null!");
+
 		registry.put(key, factory);
 	}
 
@@ -107,8 +112,8 @@ public class TransportRegistry {
 	 * </p>
 	 * 
 	 * @param key
-	 *            The key of the default transport factory or <code>null</code>
-	 *            to remove the default setting.
+	 *            The key of the default transport factory or {@code null} to
+	 *            remove the default setting.
 	 */
 	public void setDefaultTransportFactory(String key) {
 		this.defaultKey = key;
@@ -119,8 +124,10 @@ public class TransportRegistry {
 	 * 
 	 * @param key
 	 *            The key used when registering the transport factory.
-	 * @return A transport factory instance or <code>null</code> if there is no
+	 * @return A transport factory instance or {@code null} if there is no
 	 *         factory for the key.
+	 * @throws NullPointerException
+	 *             if the key parameter is {@code null}
 	 */
 	public TransportFactory getTransportFactory(String key) {
 		return registry.get(key);
@@ -129,9 +136,9 @@ public class TransportRegistry {
 	/**
 	 * Get the default transport factory.
 	 * 
-	 * @return The transport factory instance set as default or
-	 *         <code>null</code>, if no default is set or there is no transport
-	 *         factory for the default key in the registry.
+	 * @return The transport factory instance set as default or {@code null}, if
+	 *         no default is set or there is no transport factory for the
+	 *         default key in the registry.
 	 */
 	public static synchronized TransportFactory getDefaultTransportFactory() {
 		final TransportRegistry reg = getInstance();
@@ -163,20 +170,21 @@ public class TransportRegistry {
 	 * @param key
 	 *            The key to use for this transport factory,
 	 *            <code>DEFAULT_KEY</code> if you do not want to specify.
-	 * @return
+	 * @return the transport factory instance
+	 * @throws ClassNotFoundException
+	 *             if the factoryClass cannot be loaded
 	 * @throws TransportException
 	 *             if anything goes wrong during instantiation or setup
 	 */
 	public TransportFactory loadTransportFactory(String factoryClass,
 			Properties config, boolean asDefault, String key)
-			throws TransportException {
+			throws ClassNotFoundException, TransportException {
 		try {
 			// get the class
 			final Class<?> clazz = Class.forName(factoryClass);
 
 			// create instance
-			final Constructor<?> con = clazz.getConstructor();
-			final TransportFactory factory = (TransportFactory) con
+			final TransportFactory factory = (TransportFactory) clazz
 					.newInstance();
 
 			// some setup
@@ -192,16 +200,10 @@ public class TransportRegistry {
 			}
 
 			return factory;
-		} catch (ClassNotFoundException e) {
-			throw new TransportException("Factory class " + factoryClass
-					+ " could not be found!", e);
 		} catch (SecurityException e) {
 			throw new TransportException(
 					"Security exception on accessing constructor for "
 							+ factoryClass + ": " + e.getMessage(), e);
-		} catch (NoSuchMethodException e) {
-			throw new TransportException("Method could not be found: "
-					+ e.getMessage(), e);
 		} catch (IllegalArgumentException e) {
 			throw new TransportException(
 					"Illegal arguments calling constructor for " + factoryClass
@@ -211,9 +213,6 @@ public class TransportRegistry {
 					+ factoryClass + ": " + e.getMessage(), e);
 		} catch (IllegalAccessException e) {
 			throw new TransportException("Illegal access: " + e.getMessage(), e);
-		} catch (InvocationTargetException e) {
-			throw new TransportException("Invocation target exception: "
-					+ e.getMessage(), e);
 		}
 
 	}

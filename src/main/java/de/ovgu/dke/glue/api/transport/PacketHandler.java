@@ -51,9 +51,15 @@ public interface PacketHandler {
 	 * Handle an incoming packet from the specified packet thread.
 	 * 
 	 * @param packetThread
-	 *            The packet thread in which the packet occurred.
+	 *            The packet thread in which the packet occurred, may not be
+	 *            {@code null}
 	 * @param packet
-	 *            The incoming packet.
+	 *            The incoming packet, may not be {@code null}
+	 * @throw NullPointerException if either packetThread or packet are
+	 *        {@code null}; however, as the contract forbids this,
+	 *        implementations are not obliged to do so.
+	 * @throw IllegalStateException if packet handling in the current state is
+	 *        not possible (the reason may be implementation dependent).
 	 */
 	public void handle(PacketThread packetThread, Packet packet);
 }

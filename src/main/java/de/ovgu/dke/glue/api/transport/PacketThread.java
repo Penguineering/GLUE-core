@@ -40,6 +40,10 @@ import net.jcip.annotations.NotThreadSafe;
  * the same time.
  * </p>
  * 
+ * @throws IllegalStateException
+ *             if this packet thread or the underlying connection/transport are
+ *             not in a state where they can process packets.
+ * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
@@ -71,8 +75,11 @@ public interface PacketThread {
 			throws TransportException;
 
 	/**
-	 * Dispose the packet thread. Incoming messages for this thread will be
-	 * rejected and sending will no longer be possible.
+	 * Dispose the packet thread.
+	 * 
+	 * Incoming messages for this thread will be rejected and sending will no
+	 * longer be possible. Calling {@code send} after {@code dispose} should
+	 * result in an {@link IllegalStateException}.
 	 */
 	public void dispose();
 
@@ -80,7 +87,6 @@ public interface PacketThread {
 	 * Get the connection to which this thread belongs.
 	 * 
 	 * @return The Connection which is used for packet delivery in this thread.
-	 * @throws TransportException
 	 */
 	public Connection getConnection();
 }

@@ -8,6 +8,9 @@ import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 import de.ovgu.dke.glue.api.serialization.Serializer;
 
 /**
+ * Abstract base class representing the virtual connection between two
+ * middleware implementations on different clients.
+ * 
  * <p>
  * Serializers are bound to a connection, i.e. each connection may have a
  * different serialization schema (which must be assigned upon creation),
@@ -18,6 +21,10 @@ import de.ovgu.dke.glue.api.serialization.Serializer;
  * <p>
  * The Connection may be used in multiple threads and must be thread safe!
  * </p>
+ * 
+ * @throws IllegalStateException
+ *             if the transport is not available or the connection is not ready
+ *             to send packets
  * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
@@ -32,10 +39,11 @@ public abstract class Connection {
 	 * Create a connection with a specific serialization schema.
 	 * 
 	 * @param schema
-	 *            The connection schema. Using <code>null</code> disables
-	 *            serialization for this connection.
+	 *            The connection schema which may not be {@code null}
+	 * @throws NullPointerException
+	 *             if the schema is {@code null}
 	 */
-	public Connection(final String schema) {
+	protected Connection(final String schema) {
 		if (schema == null)
 			throw new NullPointerException(
 					"The connection schema may not be null!");
@@ -47,8 +55,7 @@ public abstract class Connection {
 	 * Get the connection schema for this connection, which must be set upon
 	 * creation and cannot be changed.
 	 * 
-	 * @return The serialization schema. <code>null</code> if serialization is
-	 *         disabled.
+	 * @return The serialization schema, which cannot be {@code null}
 	 */
 	public final String getConnectionSchema() {
 		return connection_schema;
@@ -65,18 +72,16 @@ public abstract class Connection {
 	public abstract String getSerializationFormat();
 
 	/**
-	 * <p>
 	 * Create a packet thread to send and receive packets from the peer of this
 	 * transport.
-	 * </p>
 	 * 
 	 * @param connection_schema
-	 *            The serialization schema for this thread.
+	 *            the serialization schema for this thread
 	 * @param handler
 	 *            The packet handler to use for incoming packets. Set to
-	 *            <code>null</code> or <code>PacketThread.DEFAULT_HANDLER</code>
-	 *            to use the factory default handler for the given schema.
-	 * @return A new packet thread.
+	 *            {@code null} or {@code PacketThread.DEFAULT_HANDLER} to use
+	 *            the factory default handler for the given schema.
+	 * @return a new packet thread
 	 * @throws TransportException
 	 *             if the thread could not be created.
 	 */
@@ -91,26 +96,35 @@ public abstract class Connection {
 	public abstract Transport getTransport();
 
 	/**
-	 * Send a packet in this connection. The connection's transport is used. If
-	 * this method returns without an exception, the payload could be serialized
-	 * and the packet has been successfully added to the packet queue. However,
-	 * errors may still occur during the delivery process, which will be
-	 * announced over the Reporter framework.
+	 * Send a packet using this connection. The connection's transport is used.
+	 * If this method returns without an exception, the payload could be
+	 * serialized and the packet has been successfully added to the packet
+	 * queue. However, errors may still occur during the delivery process, which
+	 * will be announced over the Reporter framework.
 	 * 
+	 * @param pt
+	 *            the packet thread to use with this message, may not be
+	 *            {@code null}
 	 * @param payload
-	 *            Payload to send with this message.
+	 *            the Payload to send with this message
 	 * @param prority
-	 *            The message priority, if supported by the transport, otherwise
+	 *            the message priority, if supported by the transport, otherwise
 	 *            this parameter may be ignored.
 	 * @throws TransportException
-	 *             If the payload cannot be serialized or the packet could not
-	 *             be delivered to the send queue.
+	 *             If the connection schema is unknown, the payload cannot be
+	 *             serialized or the packet could not be delivered to the send
+	 *             queue.
+	 * @throw NullPointerException if PacketThread pt is {@code null}
 	 */
 	public final void send(final PacketThread pt, final Object payload,
 			final Packet.Priority priority) throws TransportException {
+		if (pt == null)
+			throw new NullPointerException(
+					"Packet thread (pt) may not be null!");
+
 		final Transport transport = getTransport();
 		if (transport == null)
-			throw new TransportException(
+			throw new IllegalStateException(
 					"Transport not available, connection already disposed?");
 
 		try {
@@ -118,6 +132,8 @@ public abstract class Connection {
 			final SchemaRecord record = SchemaRegistry.getInstance().getRecord(
 					getConnectionSchema());
 			if (record == null)
+				// TODO use a more verbose exception, e.g.
+				// UnknownTransportSchemaException
 				throw new TransportException(
 						"The connection uses an unknown schema!");
 
@@ -131,6 +147,7 @@ public abstract class Connection {
 			// serialize the payload
 			final Object p;
 			if (serializer != null)
+				// may throw a SeralizationException
 				p = serializer.serialize(payload);
 			else
 				p = payload;
@@ -147,6 +164,9 @@ public abstract class Connection {
 	 * Send a serialized packet in this thread. This method needs to be
 	 * overwritten by the transport implementation.
 	 * 
+	 * @param pt
+	 *            Packet thread to be used; caller guarantees that this
+	 *            parameter is not {@code null}
 	 * @param payload
 	 *            Serialized payload to send with this message.
 	 * @param priority
@@ -160,7 +180,9 @@ public abstract class Connection {
 			throws TransportException;
 
 	/**
-	 * Get the thread's peer.
+	 * Get the thread's peer. This value is unstable as some transport
+	 * implementations (e.g. XMPP) may change the effective peer ID during
+	 * communication.
 	 * 
 	 * @return The peer this connection belongs to.
 	 */
@@ -169,7 +191,8 @@ public abstract class Connection {
 	/**
 	 * <p>
 	 * Check whether the peers in a connection are able to communicate with each
-	 * other, i.e. they have matching serialization methods and schemas.
+	 * other. This is the case if they have matching serialization methods and
+	 * schemas.
 	 * </p>
 	 * <p>
 	 * Calling this method is optional, if left out a TransportException may

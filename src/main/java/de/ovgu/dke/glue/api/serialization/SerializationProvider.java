@@ -84,11 +84,12 @@ public interface SerializationProvider {
 	 * 
 	 * @param format
 	 *            The format to serialize to.
-	 * @return A Serializer or <code>null</code> if no serialization is
-	 *         necessary.
+	 * @return A Serializer or {@code null} if no serialization is necessary.
 	 * @throws SerializationException
 	 *             if format or schema are unknown of the serializer cannot be
 	 *             created.
+	 * @throws NullPointerException
+	 *             if the format parameter is {@code null}
 	 */
 	public Serializer getSerializer(String format)
 			throws SerializationException;
