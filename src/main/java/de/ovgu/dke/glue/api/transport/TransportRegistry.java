@@ -79,19 +79,23 @@ public class TransportRegistry {
 	 * factory is overwritten.
 	 * 
 	 * @param key
-	 *            Key for accessing the transport factory.
+	 *            Key for accessing the transport factory or {@code DEFAULT_KEY}
+	 *            to use the factory implementation's default.
 	 * @param factory
 	 *            Transport factory to be registered.
 	 * @throws NullPointerException
-	 *             if key or factory parameter are {@code null}
+	 *             if factory parameter are {@code null}
 	 */
+	// TODO asDefault-Parameter?
+	// TODO siehe Korrespondenz zu loadTransportFactory
 	public void registerTransportFactory(String key, TransportFactory factory) {
-		if (key == null)
-			throw new NullPointerException("Transport key may not be null!");
 		if (factory == null)
 			throw new NullPointerException("Factory may not be null!");
 
-		registry.put(key, factory);
+		final String k = (key == DEFAULT_KEY) ? factory.getDefaultRegistryKey()
+				: key;
+
+		registry.put(k, factory);
 	}
 
 	/**
@@ -107,15 +111,19 @@ public class TransportRegistry {
 	 * <p>
 	 * Set the default transport factory.
 	 * </p>
-	 * <p>
-	 * The registry will not check whether a factory for this key is registered!
-	 * </p>
 	 * 
 	 * @param key
 	 *            The key of the default transport factory or {@code null} to
 	 *            remove the default setting.
+	 * @throws IllegalArgumentException
+	 *             if a factory with the provided key is not registered.
 	 */
-	public void setDefaultTransportFactory(String key) {
+	// TODO Name setDefaultTransportFactoryKey
+	public void setDefaultTransportFactory(final String key) {
+		if (key != null && !registry.containsKey(key))
+			throw new IllegalArgumentException(
+					"Will not set default key which is not in the registry!");
+
 		this.defaultKey = key;
 	}
 
@@ -129,7 +137,7 @@ public class TransportRegistry {
 	 * @throws NullPointerException
 	 *             if the key parameter is {@code null}
 	 */
-	public TransportFactory getTransportFactory(String key) {
+	public TransportFactory getTransportFactory(final String key) {
 		return registry.get(key);
 	}
 
@@ -191,12 +199,16 @@ public class TransportRegistry {
 			if (factory != null) {
 				factory.init(config);
 
+				// TODO das eher in registerTransportFactory?
+
 				// register the factory
-				final String k = (key == DEFAULT_KEY) ? factory
-						.getDefaultRegistryKey() : key;
-				registerTransportFactory(k, factory);
-				if (asDefault)
+				registerTransportFactory(key, factory);
+
+				if (asDefault) {
+					final String k = (key == DEFAULT_KEY) ? factory
+							.getDefaultRegistryKey() : key;
 					setDefaultTransportFactory(k);
+				}
 			}
 
 			return factory;

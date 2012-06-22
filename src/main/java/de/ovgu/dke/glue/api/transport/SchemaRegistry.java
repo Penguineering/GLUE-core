@@ -80,6 +80,8 @@ public class SchemaRegistry {
 	 * @throws NullPointerException
 	 *             if the record is {@code null}
 	 */
+	// TODO Exception werfen, wenn das Schema schon existiert? -> verhindert
+	// doppelte Registrierung
 	public void registerSchemaRecord(final SchemaRecord record) {
 		registry.put(record.getSchema(), record);
 	}
