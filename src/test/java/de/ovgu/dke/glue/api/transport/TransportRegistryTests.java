@@ -191,13 +191,13 @@ public class TransportRegistryTests {
 	private void registerMockTransportFactoryOne() {
 		factoryOne = EasyMock.createNiceMock(TransportFactory.class);
 		TransportRegistry.getInstance().registerTransportFactory(
-				FACTORY_ONE_KEY, factoryOne);
+				FACTORY_ONE_KEY, factoryOne, TransportRegistry.NO_DEFAULT);
 	}
 
 	private void registerMockTransportFactoryTwo() {
 		factoryTwo = EasyMock.createNiceMock(TransportFactory.class);
 		TransportRegistry.getInstance().registerTransportFactory(
-				FACTORY_TWO_KEY, factoryTwo);
+				FACTORY_TWO_KEY, factoryTwo, TransportRegistry.NO_DEFAULT);
 	}
 
 	private void registerMockTransportFactoryByName(String key) {
@@ -206,6 +206,6 @@ public class TransportRegistryTests {
 				.andReturn(DEFAULT_REGISTRY_KEY).anyTimes();
 		EasyMock.replay(factoryThree);
 		TransportRegistry.getInstance().registerTransportFactory(key,
-				factoryThree);
+				factoryThree, TransportRegistry.NO_DEFAULT);
 	}
 }

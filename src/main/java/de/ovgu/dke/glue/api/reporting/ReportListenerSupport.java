@@ -25,6 +25,11 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
+ * Support class to implement reporters to be used as a targe in the proxy
+ * pattern.
+ * 
+ * This implementation is thread safe.
+ * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */

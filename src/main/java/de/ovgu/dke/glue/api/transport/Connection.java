@@ -22,10 +22,6 @@ import de.ovgu.dke.glue.api.serialization.Serializer;
  * The Connection may be used in multiple threads and must be thread safe!
  * </p>
  * 
- * @throws IllegalStateException
- *             if the transport is not available or the connection is not ready
- *             to send packets
- * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
@@ -84,6 +80,8 @@ public abstract class Connection {
 	 * @return a new packet thread
 	 * @throws TransportException
 	 *             if the thread could not be created.
+	 * @throws IllegalStateException
+	 *             if the transport is not available
 	 */
 	public abstract PacketThread createThread(final PacketHandler handler)
 			throws TransportException;
@@ -91,7 +89,9 @@ public abstract class Connection {
 	/**
 	 * Get the connection's transport.
 	 * 
-	 * @return The transport this connection belongs to.
+	 * @return The transport this connection belongs to, must be non-null.
+	 * @throws IllegalStateException
+	 *             if the transport is not available
 	 */
 	public abstract Transport getTransport();
 
@@ -114,13 +114,23 @@ public abstract class Connection {
 	 *             If the connection schema is unknown, the payload cannot be
 	 *             serialized or the packet could not be delivered to the send
 	 *             queue.
-	 * @throw NullPointerException if PacketThread pt is {@code null}
+	 * @throws NullPointerException
+	 *             if PacketThread pt is {@code null}
+	 * @throws IllegalArgumentException
+	 *             if the packet thread does not belong to this connection.
+	 * @throws IllegalStateException
+	 *             if the transport is not available
 	 */
+	// TODO is null-payload okay?
 	public final void send(final PacketThread pt, final Object payload,
 			final Packet.Priority priority) throws TransportException {
 		if (pt == null)
 			throw new NullPointerException(
 					"Packet thread (pt) may not be null!");
+
+		if (pt.getConnection() != this)
+			throw new IllegalArgumentException(
+					"Packet thread (pt) does not belong to this connection!");
 
 		final Transport transport = getTransport();
 		if (transport == null)
@@ -166,7 +176,8 @@ public abstract class Connection {
 	 * 
 	 * @param pt
 	 *            Packet thread to be used; caller guarantees that this
-	 *            parameter is not {@code null}
+	 *            parameter is not {@code null} and the packet thread belongs to
+	 *            this connection.
 	 * @param payload
 	 *            Serialized payload to send with this message.
 	 * @param priority
@@ -174,6 +185,8 @@ public abstract class Connection {
 	 *            this parameter may be ignored.
 	 * @throws TransportException
 	 *             if the packet cannot be delivered to the send queue.
+	 * @throws IllegalStateException
+	 *             if the transport is not available
 	 */
 	protected abstract void sendSerializedPayload(final PacketThread pt,
 			final Object payload, final Packet.Priority priority)
@@ -212,6 +225,8 @@ public abstract class Connection {
 	 *         Communication may still succeed!
 	 * @throws TransportException
 	 *             if negotiation packets cannot be sent.
+	 * @throws IllegalStateException
+	 *             if the transport is not available
 	 */
 	public abstract boolean checkCapabilities() throws TransportException;
 }

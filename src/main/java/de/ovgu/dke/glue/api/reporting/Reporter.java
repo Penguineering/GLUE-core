@@ -22,17 +22,56 @@
 package de.ovgu.dke.glue.api.reporting;
 
 /**
+ * A reporter is capable of emitting events into the reporting framework to
+ * notify listeners of errors or status changes.
+ * 
+ * The reporter implementation must be thread safe, c.f.
+ * {@link ReportListenerSupport}
  * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  * 
  */
 public interface Reporter {
+	/**
+	 * The logging level of the reported event.
+	 */
 	public static enum Level {
-		INFO, WARN, ERROR
+		/**
+		 * The event is at info level.
+		 */
+		INFO,
+		/**
+		 * Warning level: something went wrong, but the error could be remedied.
+		 * However, care might be necessary to avoid further failures.
+		 */
+		WARN,
+		/**
+		 * Something went wrong and recovery was not possible
+		 */
+		ERROR
 	}
 
+	/**
+	 * Add a report listener to this reporter. The listener will get future
+	 * reports. If the listener is already registered nothing happens.
+	 * 
+	 * @param listener
+	 *            the report listener to be added, must be non-null
+	 * @throws NullPointerException
+	 *             if the listener parameter is {@code null}
+	 */
 	public void addReportListener(ReportListener listener);
 
+	/**
+	 * Remove the specified report listener from this reporter. Future reports
+	 * will no longer be sent to the listener. If the listener is not registered
+	 * nothing happens.
+	 * 
+	 * @param listener
+	 *            the report listener to be removed
+	 * @throws NullPointerException
+	 *             if the listener parameter is {@code null}
+	 */
 	public void removeReportListener(ReportListener listener);
 }

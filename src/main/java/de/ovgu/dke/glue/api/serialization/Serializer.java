@@ -63,7 +63,9 @@ public interface Serializer {
 	 * @return A class type depending on the format, which can be obtained by
 	 *         calling <code>getFormat</code>.
 	 * @throws SerializationException
-	 *             if the serialization fails.
+	 *             if the serialization fails
+	 * @throws NullPointerException
+	 *             if the parameter is {@code null}
 	 */
 	public Object serialize(Object o) throws SerializationException;
 
@@ -76,6 +78,8 @@ public interface Serializer {
 	 * @return The payload object.
 	 * @throws SerializationException
 	 *             if the de-serialization fails.
+	 * @throws NullPointerException
+	 *             if the parameter is {@code null}
 	 */
 	public Object deserialize(Object o) throws SerializationException;
 

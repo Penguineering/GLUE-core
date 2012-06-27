@@ -22,16 +22,21 @@
 package de.ovgu.dke.glue.api.reporting;
 
 /**
+ * A report listener is able to receive message or exception reports from a
+ * Reporter.
+ * 
+ * Calls to the report listener are not synchronized, i.e. if the listener
+ * crosses thread boundaries, proper synchronization must be ensured!
+ * 
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */
-// be aware of thread boundaries!
 public interface ReportListener {
 	/**
 	 * Called when a reportable event occurred.
 	 * 
 	 * @param source
-	 *            The Reporter that detected the event.
+	 *            The Reporter that detected the event, must be non-null
 	 * @param msg
 	 *            The message, i.e. some descriptive text or an error message if
 	 *            available, otherwise <code>null</code>.
@@ -42,6 +47,8 @@ public interface ReportListener {
 	 * @param level
 	 *            The report error level, see <code>Reporter.Level</code> for
 	 *            available values.
+	 * @throws NullPointerException
+	 *             if the source or level parameter are {@code null}
 	 */
 	public void onReport(Reporter source, String msg, Throwable cause,
 			Reporter.Level level);

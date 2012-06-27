@@ -76,14 +76,14 @@ public interface Packet {
 	 * @return The packet's pay-load or {@code null} if the packet did not
 	 *         contain any.
 	 */
-	Object getPayload();
+	public Object getPayload();
 
 	/**
 	 * Get the packet's priority.
 	 * 
 	 * @return The priority of this packet.
 	 */
-	Priority getPriority();
+	public Priority getPriority();
 
 	/**
 	 * Get an (implementation-dependent) attribute for this packet. Note that
@@ -94,6 +94,8 @@ public interface Packet {
 	 *            The key of the attribute which shall be retrieved.
 	 * @return The attribute value or {@code null} if there is no value for the
 	 *         key.
+	 * @throws NullPointerException
+	 *             if the key parameter is {@code null}.
 	 */
-	Object getAttribute(String key);
+	public Object getAttribute(String key);
 }

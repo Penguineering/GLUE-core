@@ -47,7 +47,7 @@ public class SchemaRecord {
 	 * 
 	 * @param schema
 	 *            The schema to be registered, which should be a valid URI and
-	 *            may not be {@code null} or empty
+	 *            must not be empty
 	 * @param packetHandlerFactory
 	 *            packet handler factory for this schema which may not be
 	 *            {@code null}
@@ -63,19 +63,8 @@ public class SchemaRecord {
 	public static SchemaRecord valueOf(String schema,
 			PacketHandlerFactory packetHandlerFactory,
 			SerializationProvider serializationProvider) {
-		if (schema == null)
-			throw new NullPointerException("Schema must be provided.");
-		if (schema.isEmpty())
-			throw new IllegalArgumentException("Schema may not be empty.");
 
-		if (packetHandlerFactory == null)
-			throw new NullPointerException(
-					"Packet Handler Factory must be provided.");
-
-		if (serializationProvider == null)
-			throw new NullPointerException(
-					"Serialization Provider must be provided.");
-
+		// the above exceptions will be thrown in the constructor
 		return new SchemaRecord(schema, packetHandlerFactory,
 				serializationProvider);
 	}
@@ -94,16 +83,37 @@ public class SchemaRecord {
 	 *            packet handler factory for this schema
 	 * @param serializationProvider
 	 *            serialization provider for this schema
+	 * @throws NullPointerException
+	 *             if one of the parameters is {@code null}
+	 * @throws IllegalArgumentException
+	 *             if the schema is an empty String.
 	 */
 	private SchemaRecord(String schema,
 			PacketHandlerFactory packetHandlerFactory,
 			SerializationProvider serializationProvider) {
-		// disable public instantiation
-
 		super();
+
 		this.schema = schema;
 		this.packetHandlerFactory = packetHandlerFactory;
 		this.serializationProvider = serializationProvider;
+
+		// throws exceptions if invariants are broken
+		checkInvariants();
+	}
+
+	private void checkInvariants() {
+		if (this.schema == null)
+			throw new NullPointerException("Schema must be provided.");
+		if (schema.isEmpty())
+			throw new IllegalArgumentException("Schema may not be empty.");
+
+		if (this.packetHandlerFactory == null)
+			throw new NullPointerException(
+					"Packet Handler Factory must be provided.");
+
+		if (this.serializationProvider == null)
+			throw new NullPointerException(
+					"Serialization Provider must be provided.");
 	}
 
 	/**

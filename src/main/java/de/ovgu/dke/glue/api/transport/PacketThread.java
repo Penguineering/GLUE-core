@@ -70,6 +70,9 @@ public interface PacketThread {
 	 * @throws TransportException
 	 *             If the payload cannot be serialized or the packet could not
 	 *             be delivered to the send queue.
+	 * @throws IllegalStateException
+	 *             if this packet thread or the underlying connection/transport
+	 *             are not in a state where they can send packets.
 	 */
 	public void send(final Object payload, final Packet.Priority priority)
 			throws TransportException;
@@ -87,6 +90,9 @@ public interface PacketThread {
 	 * Get the connection to which this thread belongs.
 	 * 
 	 * @return The Connection which is used for packet delivery in this thread.
+	 * @throws IllegalStateException
+	 *             if the packet thread does not have a valid connection
+	 * 
 	 */
 	public Connection getConnection();
 }
