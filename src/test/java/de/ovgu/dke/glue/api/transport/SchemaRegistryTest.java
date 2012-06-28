@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 
-public class SchemaRegistryTests {
+public class SchemaRegistryTest {
 
 	@Test
 	public void T00_registerValidSchemaRecord() {

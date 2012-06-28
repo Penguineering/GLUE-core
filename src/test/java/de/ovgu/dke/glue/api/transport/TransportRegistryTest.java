@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TransportRegistryTests {
+public class TransportRegistryTest {
 
 	// TODO
 	// on order to improve unit tests registerTransportFactory() should have
