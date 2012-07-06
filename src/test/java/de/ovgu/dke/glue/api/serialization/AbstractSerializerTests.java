@@ -37,7 +37,7 @@ public abstract class AbstractSerializerTests {
 	 */
 	@Test
 	public void T01_getFormat_NullFormat() {
-		Serializer ser = getSerializer("WRONG_FORMAT");
+		Serializer ser = getSerializer(null);
 		assertNotNull(
 				"Serializer doesn't handle formats correctly - NULL format.",
 				ser.getFormat());
@@ -151,20 +151,22 @@ public abstract class AbstractSerializerTests {
 	}
 
 	/**
-	 * Test if serialization of NULL works correctly by throwing a serialization
+	 * Test if serialization of NULL works correctly by throwing a null pointer
 	 * exception.
 	 * 
-	 * TODO is this the expected behavior
 	 */
 	@Test
 	public void T14_serialize_NullArgument() {
 		Serializer ser = getSerializer(SerializationProvider.STRING);
 		try {
 			ser.serialize(null);
-			fail("Didn't catch expected serialization exception!");
+			fail("Didn't catch expected null pointer exception!");
 		} catch (SerializationException e) {
 			e.printStackTrace();
-			assertTrue("Didn't catch expected serialization exception!", true);
+			fail("Catch serialization exception - did not expect that!");
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			assertTrue("Catched expected NPE exception!", true);
 		}
 	}
 
@@ -172,36 +174,19 @@ public abstract class AbstractSerializerTests {
 	 * Test if deserialization of NULL works correctly by throwing a
 	 * serialization exception.
 	 * 
-	 * TODO is this the expected behavior
 	 */
 	@Test
 	public void T15_deserialize_NullArgument() {
 		Serializer ser = getSerializer(SerializationProvider.STRING);
 		try {
 			ser.deserialize(null);
-			fail("Didn't catch expected serialization exception!");
+			fail("Didn't catch expected null pointer exception!");
 		} catch (SerializationException e) {
 			e.printStackTrace();
-			assertTrue("Didn't catch expected serialization exception!", true);
-		}
-	}
-
-	/**
-	 * Test if serialization and deserialization of NULL works correctly by
-	 * throwing a serialization exception.
-	 * 
-	 * TODO is this the expected behavior
-	 */
-	@Test
-	public void T16_serializeAndDeserialize_NullArgument() {
-		String payload = null;
-		Serializer ser = getSerializer(SerializationProvider.STRING);
-		try {
-			ser.deserialize(ser.deserialize(payload));
-			fail("Didn't catch expected serialization exception!");
-		} catch (SerializationException e) {
+			fail("Catch serialization exception - did not expect that!");
+		} catch (NullPointerException e) {
 			e.printStackTrace();
-			assertTrue("Didn't catch expected serialization exception!", true);
+			assertTrue("Catched expected NPE exception!", true);
 		}
 	}
 

@@ -3,6 +3,7 @@ package de.ovgu.dke.glue.api.serialization;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.easymock.EasyMock;
 import org.junit.After;
@@ -25,13 +26,13 @@ public abstract class AbstractSerializationProviderTests {
 	public abstract int getMaxNumOfSerializers();
 
 	public abstract SerializationProvider getSerializationProvider(
-			ArrayList<Serializer> serializers);
+			List<Serializer> serializers);
 
 	private SerializationProvider getSerializationProvider() {
 		return getSerializationProvider(getSerializers());
 	}
 
-	private ArrayList<Serializer> getSerializers() {
+	private List<Serializer> getSerializers() {
 		availSerializers = new ArrayList<Serializer>();
 
 		Serializer binSerializer = EasyMock.createMock(Serializer.class);
@@ -82,7 +83,7 @@ public abstract class AbstractSerializationProviderTests {
 		switch (num) {
 		case Integer.MAX_VALUE:
 			try {
-				ArrayList<Serializer> list = getSerializers();
+				List<Serializer> list = getSerializers();
 				list.add(null);
 				getSerializationProvider(list);
 			} catch (NullPointerException e) {
