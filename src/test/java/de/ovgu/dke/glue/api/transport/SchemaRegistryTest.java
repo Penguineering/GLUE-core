@@ -28,6 +28,7 @@ public class SchemaRegistryTest {
 
 	@Test
 	public void T02_registerOverwriteSchemaRecord() {
+		// TODO adjust test case when exception is thrown on duplicate schemas
 		SchemaRecord record1 = createSchemaRecordMock("glue:\\test");
 		SchemaRecord record2 = createSchemaRecordMock("glue:\\test");
 		SchemaRecord record3 = createSchemaRecordMock("glue:\\test2");
@@ -94,7 +95,7 @@ public class SchemaRegistryTest {
 		assertEquals(2, SchemaRegistry.getInstance().getAvailableSchemas()
 				.size());
 	}
-	
+
 	@Test
 	public void T20_getPacketHandlerFactory() {
 		SchemaRecord record1 = createSchemaRecordMock("glue:\\test");
@@ -103,10 +104,12 @@ public class SchemaRegistryTest {
 		SchemaRegistry.getInstance().registerSchemaRecord(record1);
 		SchemaRegistry.getInstance().registerSchemaRecord(record2);
 
-		assertEquals(SchemaRegistry.getInstance().getPacketHandlerFactory("glue:\\test"),
-				record1.getPacketHandlerFactory());
-		assertEquals(SchemaRegistry.getInstance().getPacketHandlerFactory("glue:\\test2"),
-				record2.getPacketHandlerFactory());
+		assertEquals(
+				SchemaRegistry.getInstance().getPacketHandlerFactory(
+						"glue:\\test"), record1.getPacketHandlerFactory());
+		assertEquals(
+				SchemaRegistry.getInstance().getPacketHandlerFactory(
+						"glue:\\test2"), record2.getPacketHandlerFactory());
 		assertEquals(2, SchemaRegistry.getInstance().getAvailableSchemas()
 				.size());
 	}
@@ -119,7 +122,8 @@ public class SchemaRegistryTest {
 		SchemaRegistry.getInstance().registerSchemaRecord(record1);
 		SchemaRegistry.getInstance().registerSchemaRecord(record2);
 
-		assertNull(SchemaRegistry.getInstance().getPacketHandlerFactory("glue:\\test3"));
+		assertNull(SchemaRegistry.getInstance().getPacketHandlerFactory(
+				"glue:\\test3"));
 
 		assertEquals(2, SchemaRegistry.getInstance().getAvailableSchemas()
 				.size());
@@ -142,7 +146,7 @@ public class SchemaRegistryTest {
 		assertEquals(2, SchemaRegistry.getInstance().getAvailableSchemas()
 				.size());
 	}
-	
+
 	@Test
 	public void T30_getSerializationProvider() {
 		SchemaRecord record1 = createSchemaRecordMock("glue:\\test");
@@ -151,10 +155,12 @@ public class SchemaRegistryTest {
 		SchemaRegistry.getInstance().registerSchemaRecord(record1);
 		SchemaRegistry.getInstance().registerSchemaRecord(record2);
 
-		assertEquals(SchemaRegistry.getInstance().getSerializationProvider("glue:\\test"),
-				record1.getSerializationProvider());
-		assertEquals(SchemaRegistry.getInstance().getSerializationProvider("glue:\\test2"),
-				record2.getSerializationProvider());
+		assertEquals(
+				SchemaRegistry.getInstance().getSerializationProvider(
+						"glue:\\test"), record1.getSerializationProvider());
+		assertEquals(
+				SchemaRegistry.getInstance().getSerializationProvider(
+						"glue:\\test2"), record2.getSerializationProvider());
 		assertEquals(2, SchemaRegistry.getInstance().getAvailableSchemas()
 				.size());
 	}
@@ -167,7 +173,8 @@ public class SchemaRegistryTest {
 		SchemaRegistry.getInstance().registerSchemaRecord(record1);
 		SchemaRegistry.getInstance().registerSchemaRecord(record2);
 
-		assertNull(SchemaRegistry.getInstance().getSerializationProvider("glue:\\test3"));
+		assertNull(SchemaRegistry.getInstance().getSerializationProvider(
+				"glue:\\test3"));
 
 		assertEquals(2, SchemaRegistry.getInstance().getAvailableSchemas()
 				.size());

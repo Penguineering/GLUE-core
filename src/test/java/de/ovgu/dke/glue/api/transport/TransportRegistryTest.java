@@ -131,14 +131,15 @@ public class TransportRegistryTest {
 		TransportRegistry.getInstance().setDefaultTransportFactory(
 				FACTORY_ONE_KEY);
 
-		TransportRegistry.getInstance().setDefaultTransportFactory(
-				FACTORY_TWO_KEY);
-		assertNull("Unexpected default factory returned.",
-				TransportRegistry.getDefaultTransportFactory());
+		try {
+			TransportRegistry.getInstance().setDefaultTransportFactory(
+					FACTORY_TWO_KEY);
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
 
-		// FIXME: set default factory before registering it
 		registerMockTransportFactoryTwo();
-		assertNull("Unexpected default factory returned.",
+		assertEquals("Unexpected default factory returned.", factoryOne,
 				TransportRegistry.getDefaultTransportFactory());
 	}
 
