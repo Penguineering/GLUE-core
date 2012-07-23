@@ -53,6 +53,7 @@ public interface Serializer {
 	 * 
 	 * @return A String specifying the result class type.
 	 */
+	// TODO wie streng ist die Format-Wertevorgabe?
 	public String getFormat();
 
 	/**
@@ -66,6 +67,9 @@ public interface Serializer {
 	 *             if the serialization fails
 	 * @throws NullPointerException
 	 *             if the parameter is {@code null}
+	 * @throws ClassCastException
+	 *             (optional) if the parameter object does not match the
+	 *             format-specific type
 	 */
 	public Object serialize(Object o) throws SerializationException;
 
@@ -80,6 +84,9 @@ public interface Serializer {
 	 *             if the de-serialization fails.
 	 * @throws NullPointerException
 	 *             if the parameter is {@code null}
+	 * @throws ClassCastException
+	 *             (optional) if the parameter object does not match the
+	 *             format-specific type
 	 */
 	public Object deserialize(Object o) throws SerializationException;
 

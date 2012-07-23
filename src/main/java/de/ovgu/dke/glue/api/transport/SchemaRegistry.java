@@ -22,14 +22,12 @@
 package de.ovgu.dke.glue.api.transport;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import de.ovgu.dke.glue.api.serialization.SerializationProvider;
-
 import net.jcip.annotations.ThreadSafe;
+import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 
 /**
  * <p>
