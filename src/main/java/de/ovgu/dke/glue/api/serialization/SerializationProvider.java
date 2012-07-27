@@ -74,7 +74,7 @@ public interface SerializationProvider {
 	 * The list may be sorted by preference. The format that is preferred most
 	 * should be the first item in the list.
 	 * 
-	 * @return List of available formats for serialization.
+	 * @return (Immutable) List of available formats for serialization.
 	 */
 	public List<String> availableFormats();
 

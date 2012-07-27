@@ -38,6 +38,7 @@ import net.jcip.annotations.NotThreadSafe;
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */
+//TODO @Immutable?
 @NotThreadSafe
 public interface Serializer {
 	/**
