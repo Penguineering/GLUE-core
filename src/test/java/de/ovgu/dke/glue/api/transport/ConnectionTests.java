@@ -10,7 +10,7 @@ import org.junit.Test;
  * @author Sebastian Dorok
  * 
  */
-public class ConnectionTest {
+public class ConnectionTests {
 
 	@Test
 	public void test() {

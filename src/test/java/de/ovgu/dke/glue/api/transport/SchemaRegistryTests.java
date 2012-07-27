@@ -15,7 +15,7 @@ import de.ovgu.dke.glue.api.serialization.SerializationProvider;
  * @author Sebastian Dorok
  * 
  */
-public class SchemaRegistryTest {
+public class SchemaRegistryTests {
 
 	/**
 	 * <p>

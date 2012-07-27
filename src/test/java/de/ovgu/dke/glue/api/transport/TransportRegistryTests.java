@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TransportRegistryTest {
+public class TransportRegistryTests {
 
 	private static String FACTORY_ONE_KEY = "FactoryOne";
 	private static String FACTORY_TWO_KEY = "FactoryTwo";
