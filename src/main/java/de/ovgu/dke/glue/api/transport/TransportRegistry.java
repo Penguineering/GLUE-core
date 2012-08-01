@@ -48,8 +48,11 @@ import net.jcip.annotations.ThreadSafe;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */
 @ThreadSafe
-public class TransportRegistry {
-	private static TransportRegistry instance = null;
+public enum TransportRegistry {
+	/**
+	 * The global instance of this registry.
+	 */
+	INSTANCE;
 
 	public static boolean AS_DEFAULT = true;
 	public static boolean NO_DEFAULT = false;
@@ -61,16 +64,16 @@ public class TransportRegistry {
 	 * @return Singleton transport registry instance.
 	 */
 	public static synchronized TransportRegistry getInstance() {
-		if (instance == null)
-			instance = new TransportRegistry();
-
-		return instance;
+		return INSTANCE;
 	}
 
 	private final Map<String, TransportFactory> registry;
 	private String defaultKey;
 
 	private TransportRegistry() {
+		// do not allow public instantiation
+
+		// registry allows concurrent access
 		this.registry = new ConcurrentHashMap<String, TransportFactory>();
 	}
 

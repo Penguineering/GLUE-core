@@ -49,8 +49,11 @@ import de.ovgu.dke.glue.api.serialization.SerializationProvider;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */
 @ThreadSafe
-public class SchemaRegistry {
-	private static SchemaRegistry instance = null;
+public enum SchemaRegistry {
+	/**
+	 * The global instance of this registry.
+	 */
+	INSTANCE;
 
 	/**
 	 * Get the instance of the schema registry.
@@ -58,16 +61,15 @@ public class SchemaRegistry {
 	 * @return The instance of the schema registry.
 	 */
 	public static final synchronized SchemaRegistry getInstance() {
-		if (instance == null)
-			instance = new SchemaRegistry();
-
-		return instance;
+		return INSTANCE;
 	}
 
 	private final Map<String, SchemaRecord> registry;
 
 	private SchemaRegistry() {
 		// do not allow public instantiation
+
+		// registry allows concurrent access
 		registry = new ConcurrentHashMap<String, SchemaRecord>();
 	}
 
