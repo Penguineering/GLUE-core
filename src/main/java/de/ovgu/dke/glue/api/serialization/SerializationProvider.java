@@ -79,15 +79,13 @@ public interface SerializationProvider {
 	public List<String> availableFormats();
 
 	/**
-	 * Get a Serializer for a specific format and schema. Those should be
-	 * negotiated for the channel.
+	 * Get a Serializer for a specified format.
 	 * 
 	 * @param format
 	 *            The format to serialize to.
 	 * @return A Serializer or {@code null} if no serialization is necessary.
 	 * @throws SerializationException
-	 *             if format or schema are unknown or the serializer cannot be
-	 *             created.
+	 *             if the format is unknown or the serializer cannot be created.
 	 * @throws NullPointerException
 	 *             if the format parameter is {@code null}
 	 */

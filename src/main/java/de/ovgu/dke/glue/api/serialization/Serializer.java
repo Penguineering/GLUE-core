@@ -38,23 +38,21 @@ import net.jcip.annotations.NotThreadSafe;
  * @author Stefan Haun (stefan.haun@ovgu.de), Sebastian Stober
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */
-//TODO @Immutable?
+// TODO @Immutable?
 @NotThreadSafe
 public interface Serializer {
 	/**
 	 * <p>
-	 * Get the result class type of this serializer. The format should match one
-	 * of the constants from <code>SerializationProvider</code> and enables the
+	 * Get the result class type of this serializer. The format enables the
 	 * transport layer to determine the result class of the serialize call.
 	 * </p>
 	 * <p>
-	 * The serializer must guarantee to return a type matching the specification
-	 * of the format in the {@link SerializationProvider}.
+	 * The serializer should return a type matching the specification of the
+	 * format in the {@link SerializationProvider}.
 	 * </p>
 	 * 
 	 * @return A String specifying the result class type.
 	 */
-	// TODO wie streng ist die Format-Wertevorgabe?
 	public String getFormat();
 
 	/**

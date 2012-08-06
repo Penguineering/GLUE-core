@@ -74,9 +74,9 @@ public abstract class Connection {
 	 * @param connection_schema
 	 *            the serialization schema for this thread
 	 * @param handler
-	 *            The packet handler to use for incoming packets. Set to
-	 *            {@code null} or {@code PacketThread.DEFAULT_HANDLER} to use
-	 *            the factory default handler for the given schema.
+	 *            The packet handler to use for incoming packets. Set to {@code
+	 *            null} or {@code PacketThread.DEFAULT_HANDLER} to use the
+	 *            factory default handler for the given schema.
 	 * @return a new packet thread
 	 * @throws TransportException
 	 *             if the thread could not be created.
@@ -103,8 +103,8 @@ public abstract class Connection {
 	 * will be announced over the Reporter framework.
 	 * 
 	 * @param pt
-	 *            the packet thread to use with this message, may not be
-	 *            {@code null}
+	 *            the packet thread to use with this message, may not be {@code
+	 *            null}
 	 * @param payload
 	 *            the Payload to send with this message
 	 * @param prority
@@ -143,7 +143,8 @@ public abstract class Connection {
 					getConnectionSchema());
 			if (record == null)
 				// TODO use a more verbose exception, e.g.
-				// UnknownTransportSchemaException
+				// UnknownTransportSchemaException or maybe
+				// SerializationException
 				throw new TransportException(
 						"The connection uses an unknown schema!");
 
