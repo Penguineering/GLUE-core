@@ -32,7 +32,7 @@ public class SchemaRecordTests {
 		SchemaRecord record = SchemaRecord.valueOf(schema, handlerFactory,
 				provider);
 		assertEquals("Unexpected schema returned.", schema, record.getSchema());
-		assertEquals("Unexpected packaet handler returned.", handlerFactory,
+		assertEquals("Unexpected packet handler returned.", handlerFactory,
 				record.getPacketHandlerFactory());
 		assertEquals("Unexpected serialization provider returned.", provider,
 				record.getSerializationProvider());

@@ -20,7 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ SchemaRegistryTests.class, TransportRegistryTests.class,
-		SchemaRecordTests.class })
+		SchemaRecordTests.class, PacketThreadTests.class })
 public class TestSuite {
 
 }
