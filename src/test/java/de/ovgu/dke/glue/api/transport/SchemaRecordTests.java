@@ -90,7 +90,7 @@ public class SchemaRecordTests {
 	 * </p>
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void T41_createSchemaRecord_EmptySchema() {
+	public void T04_createSchemaRecord_EmptySchema() {
 		String schema = "";
 		PacketHandlerFactory handlerFactory = EasyMock
 				.createMock(PacketHandlerFactory.class);

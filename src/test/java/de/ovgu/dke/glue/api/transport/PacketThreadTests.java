@@ -3,7 +3,6 @@ package de.ovgu.dke.glue.api.transport;
 import static org.junit.Assert.*;
 
 import org.easymock.EasyMock;
-import org.junit.After;
 import org.junit.Test;
 
 import de.ovgu.dke.glue.api.serialization.SerializationException;
@@ -43,7 +42,7 @@ public class PacketThreadTests {
 	 */
 	@Test
 	public void T10_send() throws SerializationException, TransportException {
-		String connectionSchema = "http://test";
+		String connectionSchema = "glue://test";
 		String serializationFormat = SerializationProvider.STRING;
 		String payload = "";
 
@@ -90,7 +89,7 @@ public class PacketThreadTests {
 	@Test(expected = IllegalStateException.class)
 	public void T11_send_TransportNull() throws SerializationException,
 			TransportException {
-		String connectionSchema = "http://test";
+		String connectionSchema = "glue://test";
 		String serializationFormat = SerializationProvider.STRING;
 		String payload = "";
 
@@ -136,8 +135,8 @@ public class PacketThreadTests {
 	@Test(expected = TransportException.class)
 	public void T12_send_SchemaRecordNull() throws SerializationException,
 			TransportException {
-		String connectionSchema = "http://test";
-		String connectionSchema2 = "http://test2";
+		String connectionSchema = "glue://test";
+		String connectionSchema2 = "glue://test2";
 		String serializationFormat = SerializationProvider.STRING;
 		String payload = "";
 
