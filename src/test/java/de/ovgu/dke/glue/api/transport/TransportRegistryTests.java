@@ -82,7 +82,7 @@ public class TransportRegistryTests {
 	/**
 	 * <p>
 	 * Every factory defines a default key if users are not interested in
-	 * defining a key themselves. The use of this default key is enabled duriong
+	 * defining a key themselves. The use of this default key is enabled during
 	 * registration process.
 	 * </p>
 	 */
@@ -266,7 +266,7 @@ public class TransportRegistryTests {
 	 * </p>
 	 */
 	@Test
-	public void T40_testGetTransportFactoryKeys() {
+	public void T40_getTransportFactoryKeys() {
 		// register two factories
 		T00_registerTransportFactory();
 
@@ -288,7 +288,7 @@ public class TransportRegistryTests {
 	 * </p>
 	 */
 	@Test
-	public void T41_testGetTransportFactoryKeys_SameKeyTwice() {
+	public void T41_getTransportFactoryKeys_SameKeyTwice() {
 		// register two factories
 		T00_registerTransportFactory();
 		// register one factory twice
@@ -315,7 +315,7 @@ public class TransportRegistryTests {
 	 * </p>
 	 */
 	@Test
-	public void T42_testGetTransportFactoryKeys_DefaultKeyBahavior() {
+	public void T42_getTransportFactoryKeys_DefaultKeyBahavior() {
 		T00_registerTransportFactory();
 		T02_registerTransportFactory_DefaultKeyBehavior();
 
