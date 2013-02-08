@@ -1,15 +1,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>de.ovgu.dke.glue</groupId>
 	<artifactId>glue-core</artifactId>
 	<version>0.2.2-SNAPSHOT</version>
-	<name>glue-core</name>
+	
+	<name>GLUE-core</name>
+	<description>
+		GLUE is a Java library that simplifies asynchronous communication between 
+		heterogeneous software components. It supports various exchangeable transport 
+		protocols such that data can be easily transmitted in every situation: within 
+		a single Java virtual machine (in-memory); over the wire (IP socket); or even 
+		within a chat procolol (XMPP).
+	</description>
+	<url>https://projects.dke-research.de/redmine/projects/glue/</url>
+	
+	<licenses>
+	    <license>
+	        <name>The Apache Software License, Version 2.0</name>
+	        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+	        <distribution>repo</distribution>
+	    </license>
+	</licenses>
+	
+	<scm>
+	    <!-- This is the new URL which will be available shortly -->
+	    <url>https://projects.dke-research.de/svn/glue/glue-core</url>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-		<!-- skip tests by default - FIXME -->
 		<skipTests>false</skipTests>
 	</properties>
 
@@ -44,6 +65,22 @@
 					<skipTests>${skipTests}</skipTests>
 				</configuration>
 			</plugin>
+ 			<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-javadoc-plugin</artifactId>
+        		<version>2.9</version>
+        		<configuration>
+          			<show>private</show>
+          			<nohelp>true</nohelp>
+        		</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+        	</plugin>			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -60,50 +97,6 @@
 		</plugins>
 	</build>
 
-
-	<repositories>
-		<repository>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-				<checksumPolicy>fail</checksumPolicy>
-			</snapshots>
-
-			<id>nexus</id>
-			<name>dke-group public nexus repository</name>
-			<url>http://svndke.cs.uni-magdeburg.de:8081/nexus/content/groups/public/</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-
-	<distributionManagement>
-
-		<!-- NOTE: if you want to deploy artifacts to the repository, you need 
-			to specify the authentication credentials in ~/.m1/settings.xml like this: 
-			<settings> ... <servers> ... <server> <id>nexus</id> <username>deployment</username> 
-			<password>deployment123</password> </server> </servers> ... </settings> id 
-			has to match the one stated below -->
-		<snapshotRepository>
-			<id>nexus.snapshots</id>
-			<name>snapshots</name>
-			<url>http://svndke.cs.uni-magdeburg.de:8081/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>nexus.releases</id>
-			<name>snapshots</name>
-			<url>http://svndke.cs.uni-magdeburg.de:8081/nexus/content/repositories/releases</url>
-			<layout>default</layout>
-		</repository>
-
-	</distributionManagement>
-
 	<!-- common dependencies -->
 	<dependencies>
 		<dependency>
@@ -111,15 +104,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 
