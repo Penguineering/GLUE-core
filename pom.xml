@@ -4,7 +4,7 @@
 	
 	<groupId>de.ovgu.dke.glue</groupId>
 	<artifactId>glue-core</artifactId>
-	<version>0.2.2-SNAPSHOT</version>
+	<version>0.2.2</version>
 	
 	<name>GLUE-core</name>
 	<description>
@@ -25,10 +25,24 @@
 	</licenses>
 	
 	<scm>
-	    <!-- This is the new URL which will be available shortly -->
-	    <url>https://projects.dke-research.de/svn/glue/glue-core</url>
+	    <url>https://projects.dke-research.de/svn/tools/glue/glue-core/</url>	    
 	</scm>
-
+	
+	<developers>
+	    <developer>
+	        <name>Stefan Haun</name>
+			<email>stefan.haun@ovgu.de</email>	        
+       </developer>
+	    <developer>
+	        <name>Sebastian Stober</name>
+			<email>sebastian.stober@ovgu.de</email>	        
+       </developer>
+	    <developer>
+	        <name>Thomas Low</name>
+			<email>thomas.low@ovgu.de</email>	        
+       </developer>
+	</developers>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skipTests>false</skipTests>
@@ -97,6 +111,36 @@
 		</plugins>
 	</build>
 
+	<profiles>
+  		<profile>
+    		<id>release-sign-artifacts</id>
+    		<activation>
+      			<property>
+        			<name>performRelease</name>
+        			<value>true</value>
+      			</property>
+    		</activation>
+    		<build>
+      			<plugins>
+       	 			<plugin>
+       	   				<groupId>org.apache.maven.plugins</groupId>
+          				<artifactId>maven-gpg-plugin</artifactId>
+          				<version>1.1</version>
+          				<executions>
+	            			<execution>
+              					<id>sign-artifacts</id>
+              					<phase>verify</phase>
+              					<goals>
+	                				<goal>sign</goal>
+              					</goals>
+            				</execution>
+          				</executions>
+        			</plugin>
+      			</plugins>
+    		</build>
+  		</profile>
+	</profiles>
+	
 	<!-- common dependencies -->
 	<dependencies>
 		<dependency>
