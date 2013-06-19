@@ -81,6 +81,9 @@ public enum TransportRegistry {
 	 * Register a transport factory. If the key already exists, its associated
 	 * factory is overwritten.
 	 * 
+	 * This method can be used if transport factory via loadTransportFactory is
+	 * not viable.
+	 * 
 	 * @param key
 	 *            Key for accessing the transport factory or {@code DEFAULT_KEY}
 	 *            to use the factory implementation's default.
