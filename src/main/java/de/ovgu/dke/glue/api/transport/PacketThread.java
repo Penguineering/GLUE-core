@@ -59,20 +59,28 @@ public abstract class PacketThread {
 	public static PacketHandler DEFAULT_HANDLER = null;
 
 	private final Connection connection;
+	private final String id;
 
 	/**
 	 * Create a packet thread for the specified connection
 	 * 
 	 * @param connection
 	 *            Connection this packet thread belongs to
+	 * @param id
+	 *            The ID of this packet thread. The id must be unique among all
+	 *            packet threads and there must be a direct one-to-one matching
+	 *            between packet threads and IDs.
 	 * @throws NullPointerException
 	 *             if the connection parameter is @code{null}
 	 */
-	public PacketThread(final Connection connection) {
+	public PacketThread(final Connection connection, final String id) {
 		if (connection == null)
 			throw new NullPointerException("Connection may not be null!");
+		if (id == null)
+			throw new NullPointerException("Id must not be null!");
 
 		this.connection = connection;
+		this.id = id;
 	}
 
 	/**
@@ -176,5 +184,18 @@ public abstract class PacketThread {
 	 */
 	public final Connection getConnection() {
 		return connection;
+	}
+	
+	/**
+	 * Get the ID of the packet thread.
+	 * 
+	 * The ID must be unique among all packet threads and there must be a direct
+	 * one-to-one matching between packet threads and IDs, so that the ID can be
+	 * used to store a reference to the packet thread.
+	 * 
+	 * @return The ID of this packet thread, which must not be null.
+	 */
+	public final String getId() {
+		return this.id;
 	}
 }

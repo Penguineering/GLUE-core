@@ -183,7 +183,8 @@ public class PacketThreadTests {
 	class PacketThreadTestImpl extends PacketThread {
 
 		public PacketThreadTestImpl(Connection connection) {
-			super(connection);
+			// TODO test the ID property
+			super(connection, "dummy-test-id");
 		}
 
 		@Override

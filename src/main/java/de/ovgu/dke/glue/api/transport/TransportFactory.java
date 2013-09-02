@@ -48,6 +48,21 @@ import de.ovgu.dke.glue.api.reporting.Reporter;
 @ThreadSafe
 public interface TransportFactory extends Reporter {
 	/**
+	 * Check if the provided peer can be served by this transport factory. If
+	 * this method returns true, the factory must be able to create a transport
+	 * for the specified peer.
+	 * 
+	 * @param peer
+	 *            The peer URI.
+	 * @param schema
+	 *            The target schema.
+	 * @return true if the peer can be used, otherwise false.
+	 * @throws NullPointerException
+	 *             if the peer argument is <code>null</code>.
+	 */
+	public boolean servesPeer(URI peer, String schema);
+
+	/**
 	 * <p>
 	 * Create a transport to the denoted peer or retrieve it from a storage of
 	 * existing transports, depending on the implementation.
