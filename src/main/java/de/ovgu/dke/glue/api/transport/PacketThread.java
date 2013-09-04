@@ -43,6 +43,14 @@ import net.jcip.annotations.NotThreadSafe;
  * the same time.
  * </p>
  * 
+ * <p>
+ * Packet threads are distinguished by their identifiers. The transport
+ * implementation must take care to generate unique IDs and also may implement
+ * mechanisms to determine if an ID is local, i.e. has been created by the
+ * transport instance. Packet Threads are considered equal if their IDs are
+ * equal.
+ * </p>
+ * 
  * @throws IllegalStateException
  *             if this packet thread or the underlying connection/transport are
  *             not in a state where they can process packets.
@@ -77,7 +85,7 @@ public abstract class PacketThread {
 		if (connection == null)
 			throw new NullPointerException("Connection may not be null!");
 		if (id == null)
-			throw new NullPointerException("Id must not be null!");
+			throw new NullPointerException("ID must not be null!");
 
 		this.connection = connection;
 		this.id = id;
@@ -185,7 +193,7 @@ public abstract class PacketThread {
 	public final Connection getConnection() {
 		return connection;
 	}
-	
+
 	/**
 	 * Get the ID of the packet thread.
 	 * 
@@ -197,5 +205,30 @@ public abstract class PacketThread {
 	 */
 	public final String getId() {
 		return this.id;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PacketThread other = (PacketThread) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }
