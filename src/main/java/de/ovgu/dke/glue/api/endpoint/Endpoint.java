@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
+import de.ovgu.dke.glue.api.transport.SchemaRegistry;
 import de.ovgu.dke.glue.api.transport.TransportException;
 
 /**
@@ -43,6 +44,8 @@ public interface Endpoint {
 	 * @return The schema supported by this end-point.
 	 */
 	public String getSchema();
+	
+	public SchemaRegistry getSchemaRegistry();
 
 	/**
 	 * Open a packet thread to the specified peer.
