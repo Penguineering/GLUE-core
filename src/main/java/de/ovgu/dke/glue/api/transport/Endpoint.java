@@ -7,12 +7,12 @@ import java.util.NoSuchElementException;
  * Communication endpoint for a software component using GLUE.
  * 
  * <p>
- * The endpoint hides the specific wiring of GLUE peers to the software using
+ * The end-point hides the specific wiring of GLUE peers to the software using
  * the communication channel.
  * </p>
  * 
  * <p>
- * An endpoint may be connected to several transport factories, thus allowing to
+ * An end-point may be connected to several transport factories, thus allowing to
  * use different channels. Based on the peer URI the actual communication
  * channel is selected.
  * </p>
@@ -34,25 +34,21 @@ public interface Endpoint {
 	public String getId();
 
 	/**
-	 * Get a connection to the specified peer, using the specified schema.
+	 * Open a packet thread to the specified peer.
 	 * <p>
-	 * If a connection cannot be created, the {@link NoSuchElementException} is
-	 * thrown.
+	 * If a packet thread cannot be opened, the {@link NoSuchElementException}
+	 * is thrown.
 	 * <p>
 	 * 
 	 * @param peer
 	 *            The target peer. A channel is selected based on the peer URI.
-	 * @param schema
-	 *            The communication schema to connect to the right peer
-	 *            middle-ware.
-	 * @return A connection with an established channel.
+	 * @return An established packet thread
 	 * @throws NoSuchElementException
 	 *             if a matching connection cannot be created.
 	 * @throws TransportException
 	 *             on internal transport errors.
 	 * @throws NullPointerException
-	 *             if one of the parameters is <code>null</code>.
+	 *             if one the URI is <code>null</code>.
 	 */
-	public Connection getConnection(URI peer, String schema)
-			throws TransportException;
+	public PacketThread openPacketThread(URI peer) throws TransportException;
 }
