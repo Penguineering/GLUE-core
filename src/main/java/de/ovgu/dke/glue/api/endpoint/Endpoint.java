@@ -3,6 +3,7 @@ package de.ovgu.dke.glue.api.endpoint;
 import java.net.URI;
 import java.util.NoSuchElementException;
 
+import de.ovgu.dke.glue.api.transport.PacketHandler;
 import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.TransportException;
 
@@ -15,8 +16,8 @@ import de.ovgu.dke.glue.api.transport.TransportException;
  * </p>
  * 
  * <p>
- * An end-point may be connected to several transport factories, thus allowing to
- * use different channels. Based on the peer URI the actual communication
+ * An end-point may be connected to several transport factories, thus allowing
+ * to use different channels. Based on the peer URI the actual communication
  * channel is selected.
  * </p>
  * 
@@ -45,6 +46,8 @@ public interface Endpoint {
 	 * 
 	 * @param peer
 	 *            The target peer. A channel is selected based on the peer URI.
+	 * @param handler
+	 *            The packet handler for the packet thread.
 	 * @return An established packet thread
 	 * @throws NoSuchElementException
 	 *             if a matching connection cannot be created.
@@ -53,5 +56,6 @@ public interface Endpoint {
 	 * @throws NullPointerException
 	 *             if one the URI is <code>null</code>.
 	 */
-	public PacketThread openPacketThread(URI peer) throws TransportException;
+	public PacketThread openPacketThread(URI peer, PacketHandler handler)
+			throws TransportException;
 }
