@@ -38,6 +38,13 @@ public interface Endpoint {
 	public String getId();
 
 	/**
+	 * Get the schema setting for this end-point.
+	 * 
+	 * @return The schema supported by this end-point.
+	 */
+	public String getSchema();
+
+	/**
 	 * Open a packet thread to the specified peer.
 	 * <p>
 	 * If a packet thread cannot be opened, the {@link NoSuchElementException}
