@@ -22,7 +22,6 @@
 package de.ovgu.dke.glue.api.transport;
 
 import net.jcip.annotations.NotThreadSafe;
-import de.ovgu.dke.glue.api.endpoint.Endpoint;
 import de.ovgu.dke.glue.api.serialization.SerializationException;
 import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 import de.ovgu.dke.glue.api.serialization.Serializer;
@@ -67,8 +66,6 @@ public abstract class PacketThread {
 	 */
 	public static PacketHandler DEFAULT_HANDLER = null;
 
-	private final Endpoint endpoint;
-
 	private final Connection connection;
 	private final String id;
 
@@ -84,16 +81,12 @@ public abstract class PacketThread {
 	 * @throws NullPointerException
 	 *             if the connection parameter is @code{null}
 	 */
-	public PacketThread(final Endpoint endpoint, final Connection connection,
-			final String id) {
-		if (endpoint == null)
-			throw new NullPointerException("End-point must not be null!");
+	public PacketThread(final Connection connection, final String id) {
 		if (connection == null)
 			throw new NullPointerException("Connection must not be null!");
 		if (id == null)
 			throw new NullPointerException("ID must not be null!");
 
-		this.endpoint = endpoint;
 		this.connection = connection;
 		this.id = id;
 	}
@@ -127,7 +120,7 @@ public abstract class PacketThread {
 
 		try {
 			// find the serializer according to the connection's format
-			final SerializationProvider prov = endpoint
+			final SerializationProvider prov = connection.getEndpoint()
 					.getSerializationProvider();
 
 			final Serializer serializer = prov == null ? null : prov
@@ -202,10 +195,6 @@ public abstract class PacketThread {
 	 */
 	public final String getId() {
 		return this.id;
-	}
-
-	public final Endpoint getEndpoint() {
-		return this.endpoint;
 	}
 
 	@Override

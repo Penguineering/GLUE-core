@@ -109,13 +109,14 @@ public interface TransportFactory extends Reporter {
 	 * @throws TransportException
 	 *             if the initialization fails.
 	 */
-	public void init(final Properties config, Endpoint defaultEndpoint)
-			throws TransportException;
+	public void init(final Properties config) throws TransportException;
 
 	/**
 	 * Dispose the transport factory and free all resources.
 	 */
 	public void dispose();
+
+	public void addDefaultEndpoint(Endpoint defaultEndpoint);
 
 	/**
 	 * Add a life-cycle listener to this transport.

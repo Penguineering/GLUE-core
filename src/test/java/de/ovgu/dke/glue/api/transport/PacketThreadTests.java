@@ -1,13 +1,12 @@
 package de.ovgu.dke.glue.api.transport;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
 
 import de.ovgu.dke.glue.api.serialization.SerializationException;
 import de.ovgu.dke.glue.api.serialization.SerializationProvider;
-import de.ovgu.dke.glue.api.serialization.Serializer;
 import de.ovgu.dke.glue.api.transport.Packet.Priority;
 
 /**
@@ -50,27 +49,13 @@ public class PacketThreadTests {
 		Connection connectionMock = EasyMock.createMock(Connection.class);
 		EasyMock.expect(connectionMock.getTransport()).andReturn(transportMock)
 				.anyTimes();
-		EasyMock.expect(connectionMock.getConnectionSchema()).andReturn(
+		EasyMock.expect(connectionMock.getEndpoint().getSchema()).andReturn(
 				connectionSchema);
 		EasyMock.expect(connectionMock.getSerializationFormat()).andReturn(
 				serializationFormat);
 		EasyMock.replay(connectionMock);
 
-		SerializationProvider serializationProviderMock = EasyMock
-				.createMock(SerializationProvider.class);
-		SchemaRecord schemaRecordMock = EasyMock.createMock(SchemaRecord.class);
-		Serializer serializerMock = EasyMock.createMock(Serializer.class);
-		EasyMock.expect(
-				serializationProviderMock.getSerializer(serializationFormat))
-				.andReturn(serializerMock);
-		EasyMock.expect(schemaRecordMock.getSerializationProvider()).andReturn(
-				serializationProviderMock);
-		EasyMock.expect(schemaRecordMock.getSchema()).andReturn(
-				connectionSchema);
-		EasyMock.replay(serializationProviderMock);
-		EasyMock.replay(schemaRecordMock);
-
-		SchemaRegistry.getInstance().registerSchemaRecord(schemaRecordMock);
+		// Anpassung an Endpoint im PacketThread
 
 		PacketThreadTestImpl packetThread = new PacketThreadTestImpl(
 				connectionMock);
@@ -96,27 +81,13 @@ public class PacketThreadTests {
 		Transport transportMock = null;
 		Connection connectionMock = EasyMock.createMock(Connection.class);
 		EasyMock.expect(connectionMock.getTransport()).andReturn(transportMock);
-		EasyMock.expect(connectionMock.getConnectionSchema()).andReturn(
+		EasyMock.expect(connectionMock.getEndpoint().getSchema()).andReturn(
 				connectionSchema);
 		EasyMock.expect(connectionMock.getSerializationFormat()).andReturn(
 				serializationFormat);
 		EasyMock.replay(connectionMock);
 
-		SerializationProvider serializationProviderMock = EasyMock
-				.createMock(SerializationProvider.class);
-		SchemaRecord schemaRecordMock = EasyMock.createMock(SchemaRecord.class);
-		Serializer serializerMock = EasyMock.createMock(Serializer.class);
-		EasyMock.expect(
-				serializationProviderMock.getSerializer(serializationFormat))
-				.andReturn(serializerMock);
-		EasyMock.expect(schemaRecordMock.getSerializationProvider()).andReturn(
-				serializationProviderMock);
-		EasyMock.expect(schemaRecordMock.getSchema()).andReturn(
-				connectionSchema);
-		EasyMock.replay(serializationProviderMock);
-		EasyMock.replay(schemaRecordMock);
-
-		SchemaRegistry.getInstance().registerSchemaRecord(schemaRecordMock);
+		// TODO Anpassung an Endpoint im PacketThread
 
 		PacketThreadTestImpl packetThread = new PacketThreadTestImpl(
 				connectionMock);
@@ -144,27 +115,13 @@ public class PacketThreadTests {
 		Connection connectionMock = EasyMock.createMock(Connection.class);
 		EasyMock.expect(connectionMock.getTransport()).andReturn(transportMock)
 				.anyTimes();
-		EasyMock.expect(connectionMock.getConnectionSchema()).andReturn(
+		EasyMock.expect(connectionMock.getEndpoint().getSchema()).andReturn(
 				connectionSchema2);
 		EasyMock.expect(connectionMock.getSerializationFormat()).andReturn(
 				serializationFormat);
 		EasyMock.replay(connectionMock);
 
-		SerializationProvider serializationProviderMock = EasyMock
-				.createMock(SerializationProvider.class);
-		SchemaRecord schemaRecordMock = EasyMock.createMock(SchemaRecord.class);
-		Serializer serializerMock = EasyMock.createMock(Serializer.class);
-		EasyMock.expect(
-				serializationProviderMock.getSerializer(serializationFormat))
-				.andReturn(serializerMock);
-		EasyMock.expect(schemaRecordMock.getSerializationProvider()).andReturn(
-				serializationProviderMock);
-		EasyMock.expect(schemaRecordMock.getSchema()).andReturn(
-				connectionSchema);
-		EasyMock.replay(serializationProviderMock);
-		EasyMock.replay(schemaRecordMock);
-
-		SchemaRegistry.getInstance().registerSchemaRecord(schemaRecordMock);
+		// TODO Anpassung an Endpoint im PacketThread
 
 		PacketThreadTestImpl packetThread = new PacketThreadTestImpl(
 				connectionMock);
@@ -185,7 +142,7 @@ public class PacketThreadTests {
 		public PacketThreadTestImpl(Connection connection) {
 			// TODO test the ID property
 			// TODO create dummy endpoint
-			super(connection, null, "dummy-test-id");
+			super(connection, "dummy-test-id");
 		}
 
 		@Override

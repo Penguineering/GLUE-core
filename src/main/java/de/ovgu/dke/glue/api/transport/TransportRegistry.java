@@ -28,7 +28,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.jcip.annotations.ThreadSafe;
-import de.ovgu.dke.glue.api.endpoint.Endpoint;
 
 /**
  * <p>
@@ -198,7 +197,7 @@ public enum TransportRegistry {
 	 *             if anything goes wrong during instantiation or setup
 	 */
 	public TransportFactory loadTransportFactory(String factoryClass,
-			Properties config, Endpoint defaultEndpoint, boolean asDefault,
+			Properties config, boolean asDefault,
 			String key) throws ClassNotFoundException, TransportException {
 		try {
 			// get the class
@@ -210,14 +209,10 @@ public enum TransportRegistry {
 
 			// some setup
 			if (factory != null) {
-				factory.init(config, defaultEndpoint);
+				factory.init(config);
 
 				// register the factory
 				registerTransportFactory(key, factory, asDefault);
-
-				// register with the default end-point, if available
-				if (defaultEndpoint != null)
-					defaultEndpoint.registerTransportFactory(factory);
 			}
 
 			return factory;
@@ -247,6 +242,5 @@ public enum TransportRegistry {
 			factory.dispose();
 		defaultKey = null;
 		registry.clear();
-	}
-
+	}	
 }

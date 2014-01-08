@@ -4,9 +4,8 @@ import java.net.URI;
 import java.util.NoSuchElementException;
 
 import de.ovgu.dke.glue.api.serialization.SerializationProvider;
-import de.ovgu.dke.glue.api.transport.PacketHandler;
+import de.ovgu.dke.glue.api.transport.Connection;
 import de.ovgu.dke.glue.api.transport.PacketHandlerFactory;
-import de.ovgu.dke.glue.api.transport.PacketThread;
 import de.ovgu.dke.glue.api.transport.TransportException;
 import de.ovgu.dke.glue.api.transport.TransportFactory;
 
@@ -58,16 +57,14 @@ public interface Endpoint {
 	public SerializationProvider getSerializationProvider();
 
 	/**
-	 * Open a packet thread to the specified peer.
+	 * Open a connection to the specified peer.
 	 * <p>
-	 * If a packet thread cannot be opened, the {@link NoSuchElementException}
-	 * is thrown.
+	 * If a connection cannot be opened, the {@link NoSuchElementException} is
+	 * thrown.
 	 * <p>
 	 * 
 	 * @param peer
 	 *            The target peer. A channel is selected based on the peer URI.
-	 * @param handler
-	 *            The packet handler for the packet thread.
 	 * @return An established packet thread
 	 * @throws NoSuchElementException
 	 *             if a matching connection cannot be created.
@@ -76,8 +73,7 @@ public interface Endpoint {
 	 * @throws NullPointerException
 	 *             if one the URI is <code>null</code>.
 	 */
-	public PacketThread openPacketThread(URI peer, PacketHandler handler)
-			throws TransportException;
+	public Connection openConnection(URI peer) throws TransportException;
 
 	public void registerTransportFactory(TransportFactory factory)
 			throws TransportException;

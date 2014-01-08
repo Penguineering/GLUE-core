@@ -90,15 +90,14 @@ public interface Transport {
 	 * @return The instance of the default end-point, @code{null} if not
 	 *         available.
 	 */
-	public Endpoint getDefaultEndpoint();
+	public Endpoint getDefaultEndpoint(String schema);
 
 	/**
 	 * <p>
 	 * Get (or, if necessary, create) the connection on this transport for a
 	 * specific connection schema. A transport can hold multiple connections,
 	 * however each connection is assigned a schema, which determines the
-	 * default packet handler and the {@link Serializer} as registered in the
-	 * {@link SchemaRegistry}.
+	 * default packet handler and the {@link Serializer}.
 	 * </p>
 	 * 
 	 * <p>
@@ -115,6 +114,6 @@ public interface Transport {
 	 * @throws NullPointerException
 	 *             if the schema parameter is {@code null}
 	 */
-	public Connection getConnection(final String schema)
+	public Connection getConnection(final Endpoint endpoint)
 			throws TransportException;
 }

@@ -27,13 +27,7 @@ import de.ovgu.dke.glue.api.serialization.SerializationProvider;
  */
 @ThreadSafe
 public interface Connection {
-	/**
-	 * Get the connection schema for this connection, which must be set upon
-	 * creation and cannot be changed.
-	 * 
-	 * @return The serialization schema, which cannot be {@code null}
-	 */
-	public String getConnectionSchema();
+	public Endpoint getEndpoint();
 
 	/**
 	 * Get the connection's serialization format. The value depends on the
@@ -61,8 +55,8 @@ public interface Connection {
 	 * @throws IllegalStateException
 	 *             if the transport is not available
 	 */
-	public abstract PacketThread createThread(final Endpoint endpoint,
-			final PacketHandler handler) throws TransportException;
+	public abstract PacketThread createThread(final PacketHandler handler)
+			throws TransportException;
 
 	/**
 	 * Get the connection's transport.
