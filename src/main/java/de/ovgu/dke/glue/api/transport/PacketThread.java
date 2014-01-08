@@ -21,10 +21,11 @@
  */
 package de.ovgu.dke.glue.api.transport;
 
+import net.jcip.annotations.NotThreadSafe;
+import de.ovgu.dke.glue.api.endpoint.Endpoint;
 import de.ovgu.dke.glue.api.serialization.SerializationException;
 import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 import de.ovgu.dke.glue.api.serialization.Serializer;
-import net.jcip.annotations.NotThreadSafe;
 
 /**
  * <p>
@@ -66,6 +67,8 @@ public abstract class PacketThread {
 	 */
 	public static PacketHandler DEFAULT_HANDLER = null;
 
+	private final Endpoint endpoint;
+
 	private final Connection connection;
 	private final String id;
 
@@ -81,12 +84,16 @@ public abstract class PacketThread {
 	 * @throws NullPointerException
 	 *             if the connection parameter is @code{null}
 	 */
-	public PacketThread(final Connection connection, final String id) {
+	public PacketThread(final Endpoint endpoint, final Connection connection,
+			final String id) {
+		if (endpoint == null)
+			throw new NullPointerException("End-point must not be null!");
 		if (connection == null)
-			throw new NullPointerException("Connection may not be null!");
+			throw new NullPointerException("Connection must not be null!");
 		if (id == null)
 			throw new NullPointerException("ID must not be null!");
 
+		this.endpoint = endpoint;
 		this.connection = connection;
 		this.id = id;
 	}
@@ -119,18 +126,8 @@ public abstract class PacketThread {
 					"Transport not available, connection already disposed?");
 
 		try {
-			// retrieve the schema record
-			final SchemaRecord record = SchemaRegistry.getInstance().getRecord(
-					getConnection().getConnectionSchema());
-			if (record == null)
-				// TODO use a more verbose exception, e.g.
-				// UnknownTransportSchemaException or maybe
-				// SerializationException
-				throw new TransportException(
-						"The connection uses an unknown schema!");
-
 			// find the serializer according to the connection's format
-			final SerializationProvider prov = record
+			final SerializationProvider prov = endpoint
 					.getSerializationProvider();
 
 			final Serializer serializer = prov == null ? null : prov
@@ -205,6 +202,10 @@ public abstract class PacketThread {
 	 */
 	public final String getId() {
 		return this.id;
+	}
+
+	public final Endpoint getEndpoint() {
+		return this.endpoint;
 	}
 
 	@Override

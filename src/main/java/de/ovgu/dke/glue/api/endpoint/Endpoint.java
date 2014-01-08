@@ -3,13 +3,15 @@ package de.ovgu.dke.glue.api.endpoint;
 import java.net.URI;
 import java.util.NoSuchElementException;
 
+import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 import de.ovgu.dke.glue.api.transport.PacketHandler;
+import de.ovgu.dke.glue.api.transport.PacketHandlerFactory;
 import de.ovgu.dke.glue.api.transport.PacketThread;
-import de.ovgu.dke.glue.api.transport.SchemaRegistry;
 import de.ovgu.dke.glue.api.transport.TransportException;
+import de.ovgu.dke.glue.api.transport.TransportFactory;
 
 /**
- * Communication endpoint for a software component using GLUE.
+ * Communication end-point for a software component using GLUE.
  * 
  * <p>
  * The end-point hides the specific wiring of GLUE peers to the software using
@@ -22,30 +24,38 @@ import de.ovgu.dke.glue.api.transport.TransportException;
  * channel is selected.
  * </p>
  * 
- * <p>
- * This is a client-side API interface, i.e. only methods for communication are
- * exposed.
- * </p>
- * 
  * @author Stefan Haun (stefan.haun@ovgu.de)
  */
 public interface Endpoint {
 	/**
-	 * The identifier for this endpoint, which is used to assign a configured
-	 * endpoint to a software component.
+	 * The identifier for this end-point, which is used to assign a configured
+	 * end-point to a software component.
 	 * 
-	 * @return A non-null string containing the endpoint's identifier.
+	 * @return A non-null string containing the end-point's identifier.
 	 */
 	public String getId();
 
 	/**
-	 * Get the schema setting for this end-point.
+	 * Get the schema of this end-point.
 	 * 
-	 * @return The schema supported by this end-point.
+	 * @return The schema supported by this MiddleWare.
 	 */
 	public String getSchema();
-	
-	public SchemaRegistry getSchemaRegistry();
+
+	/**
+	 * Get the packet handler factory for this end-point.
+	 * 
+	 * @return the packet handler factory for this end-point; not {@code null}
+	 */
+	public PacketHandlerFactory getPacketHandlerFactory();
+
+	/**
+	 * get the serialization provider for this end-point.
+	 * 
+	 * @return the serialization provider for this end-point; not {@code null}
+	 */
+
+	public SerializationProvider getSerializationProvider();
 
 	/**
 	 * Open a packet thread to the specified peer.
@@ -68,4 +78,8 @@ public interface Endpoint {
 	 */
 	public PacketThread openPacketThread(URI peer, PacketHandler handler)
 			throws TransportException;
+
+	public void registerTransportFactory(TransportFactory factory)
+			throws TransportException;
+
 }

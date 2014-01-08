@@ -21,6 +21,7 @@
  */
 package de.ovgu.dke.glue.api.transport;
 
+import de.ovgu.dke.glue.api.endpoint.Endpoint;
 import de.ovgu.dke.glue.api.serialization.Serializer;
 
 /**
@@ -77,6 +78,19 @@ public interface Transport {
 		 */
 		FAILED
 	}
+
+	/**
+	 * The default end-point for this transport.
+	 * 
+	 * <p>
+	 * Incoming packages with unknown packet thread will be routed to this
+	 * end-point.
+	 * </p>
+	 * 
+	 * @return The instance of the default end-point, @code{null} if not
+	 *         available.
+	 */
+	public Endpoint getDefaultEndpoint();
 
 	/**
 	 * <p>

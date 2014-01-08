@@ -49,19 +49,14 @@ import de.ovgu.dke.glue.api.serialization.SerializationProvider;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */
 @ThreadSafe
-public enum SchemaRegistry {
-	/**
-	 * The global instance of this registry.
-	 */
-	INSTANCE;
-
+public class SchemaRegistry {
 	/**
 	 * Get the instance of the schema registry.
 	 * 
 	 * @return The instance of the schema registry.
 	 */
-	public static final synchronized SchemaRegistry getInstance() {
-		return INSTANCE;
+	public static final synchronized SchemaRegistry newInstance() {
+		return new SchemaRegistry();
 	}
 
 	private final Map<String, SchemaRecord> registry;

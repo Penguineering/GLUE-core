@@ -25,6 +25,7 @@ import java.net.URI;
 import java.util.Properties;
 
 import net.jcip.annotations.ThreadSafe;
+import de.ovgu.dke.glue.api.endpoint.Endpoint;
 import de.ovgu.dke.glue.api.reporting.Reporter;
 
 /**
@@ -108,7 +109,8 @@ public interface TransportFactory extends Reporter {
 	 * @throws TransportException
 	 *             if the initialization fails.
 	 */
-	public void init(final Properties config) throws TransportException;
+	public void init(final Properties config, Endpoint defaultEndpoint)
+			throws TransportException;
 
 	/**
 	 * Dispose the transport factory and free all resources.

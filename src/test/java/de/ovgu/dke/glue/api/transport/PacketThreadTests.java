@@ -184,7 +184,8 @@ public class PacketThreadTests {
 
 		public PacketThreadTestImpl(Connection connection) {
 			// TODO test the ID property
-			super(connection, "dummy-test-id");
+			// TODO create dummy endpoint
+			super(connection, null, "dummy-test-id");
 		}
 
 		@Override

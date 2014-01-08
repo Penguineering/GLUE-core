@@ -3,6 +3,7 @@ package de.ovgu.dke.glue.api.transport;
 import java.net.URI;
 
 import net.jcip.annotations.ThreadSafe;
+import de.ovgu.dke.glue.api.endpoint.Endpoint;
 import de.ovgu.dke.glue.api.serialization.SerializationProvider;
 
 /**
@@ -60,8 +61,8 @@ public interface Connection {
 	 * @throws IllegalStateException
 	 *             if the transport is not available
 	 */
-	public abstract PacketThread createThread(final PacketHandler handler)
-			throws TransportException;
+	public abstract PacketThread createThread(final Endpoint endpoint,
+			final PacketHandler handler) throws TransportException;
 
 	/**
 	 * Get the connection's transport.
