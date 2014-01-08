@@ -75,7 +75,16 @@ public interface Endpoint {
 	 */
 	public Connection openConnection(URI peer) throws TransportException;
 
-	public void registerTransportFactory(TransportFactory factory)
-			throws TransportException;
+	/**
+	 * Register a transport factory to this end-point, allowing to use the
+	 * provided transport as out-bound channels for the dispatcher.
+	 * 
+	 * @param factory
+	 *            The transport factory to be added to the end-point.
+	 * @throws NullPointerException
+	 *             if the factory argument is <code>null</code>.
+	 */
+
+	public void registerTransportFactory(TransportFactory factory);
 
 }

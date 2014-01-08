@@ -116,7 +116,16 @@ public interface TransportFactory extends Reporter {
 	 */
 	public void dispose();
 
-	public void addDefaultEndpoint(Endpoint defaultEndpoint);
+	/**
+	 * Add an end-point for in-bound messages without existing message thread.
+	 * <p>
+	 * If an end-point for the same schema exists, it will be over-written.
+	 * </p>
+	 * 
+	 * @param inboundEndpoint
+	 *            The in-bound endpoint.
+	 */
+	public void addInboundEndpoint(Endpoint inboundEndpoint);
 
 	/**
 	 * Add a life-cycle listener to this transport.
