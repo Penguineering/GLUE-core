@@ -62,6 +62,7 @@ public enum TransportRegistry {
 	 * Get the singleton instance of the transport registry.
 	 * 
 	 * @return Singleton transport registry instance.
+	 * @deprecated use the enum instance instead
 	 */
 	public static synchronized TransportRegistry getInstance() {
 		return INSTANCE;

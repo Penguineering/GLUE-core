@@ -123,7 +123,7 @@ public interface TransportFactory extends Reporter {
 	 * </p>
 	 * 
 	 * @param inboundEndpoint
-	 *            The in-bound endpoint.
+	 *            The in-bound end-point.
 	 */
 	public void addInboundEndpoint(Endpoint inboundEndpoint);
 
@@ -144,5 +144,4 @@ public interface TransportFactory extends Reporter {
 	 */
 	public void removeTransportLifecycleListener(
 			TransportLifecycleListener listener);
-
 }

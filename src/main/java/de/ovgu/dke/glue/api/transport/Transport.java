@@ -22,14 +22,13 @@
 package de.ovgu.dke.glue.api.transport;
 
 import de.ovgu.dke.glue.api.endpoint.Endpoint;
-import de.ovgu.dke.glue.api.serialization.Serializer;
 
 /**
  * <p>
  * A Transport represents a connection to another peer. Dependent on the
  * underlying communication method, this may either be just a place-holder for
- * the peer's address or a physical communication link. Based on a transport,
- * the application can open packet threads to send and receive message.
+ * the peer's address, or a physical communication link. Based on a transport,
+ * the application can open packet threads to send and receive messages.
  * </p>
  * 
  * <p>
@@ -95,9 +94,8 @@ public interface Transport {
 	/**
 	 * <p>
 	 * Get (or, if necessary, create) the connection on this transport for a
-	 * specific connection schema. A transport can hold multiple connections,
-	 * however each connection is assigned a schema, which determines the
-	 * default packet handler and the {@link Serializer}.
+	 * specific end-point. A transport can hold multiple connections, however
+	 * each connection is assigned an end-point.
 	 * </p>
 	 * 
 	 * <p>
@@ -106,13 +104,13 @@ public interface Transport {
 	 * on sending the first packet over the connection.
 	 * </p>
 	 * 
-	 * @param schema
-	 *            The connection schema, may not be {@code null}
+	 * @param endpoint
+	 *            The connection end-point, must not be {@code null}
 	 * @return a Connection
 	 * @throws TransportException
 	 *             if the connection cannot be created
 	 * @throws NullPointerException
-	 *             if the schema parameter is {@code null}
+	 *             if the end-point parameter is {@code null}
 	 */
 	public Connection getConnection(final Endpoint endpoint)
 			throws TransportException;
