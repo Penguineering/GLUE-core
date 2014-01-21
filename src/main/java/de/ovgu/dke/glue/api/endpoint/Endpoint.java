@@ -1,3 +1,24 @@
+/*
+ * Copyright 2012-2014 Stefan Haun, Thomas Low, Sebastian Stober, Andreas Nürnberger
+ * 
+ *      Data and Knowledge Engineering Group, 
+ * 		Faculty of Computer Science,
+ *		Otto-von-Guericke University,
+ *		Magdeburg, Germany
+ *
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.ovgu.dke.glue.api.endpoint;
 
 import java.net.URI;
@@ -21,6 +42,12 @@ import de.ovgu.dke.glue.api.transport.TransportFactory;
  * An end-point may be connected to several transport factories, thus allowing
  * to use different channels. Based on the peer URI the actual communication
  * channel is selected.
+ * </p>
+ * 
+ * <p>
+ * To enable incoming connections (i.e. packet threads which are initiated by
+ * another end-point) registration as an in-bound end-point with the
+ * {@link TransportFactory} is necessary.
  * </p>
  * 
  * @author Stefan Haun (stefan.haun@ovgu.de)
@@ -77,14 +104,13 @@ public interface Endpoint {
 
 	/**
 	 * Register a transport factory to this end-point, allowing to use the
-	 * provided transport as out-bound channels for the dispatcher.
+	 * provided transport as out-bound channel for the dispatcher.
 	 * 
 	 * @param factory
 	 *            The transport factory to be added to the end-point.
 	 * @throws NullPointerException
 	 *             if the factory argument is <code>null</code>.
 	 */
-
 	public void registerTransportFactory(TransportFactory factory);
 
 }

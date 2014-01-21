@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Stefan Haun, Thomas Low, Sebastian Stober, Andreas Nürnberger
+ * Copyright 2012-14 Stefan Haun, Thomas Low, Sebastian Stober, Andreas Nürnberger
  * 
  *      Data and Knowledge Engineering Group, 
  * 		Faculty of Computer Science,
@@ -34,6 +34,7 @@ import de.ovgu.dke.glue.api.reporting.Reporter;
  * URI. Transport acquisition is preliminary to getting a packet thread and
  * sending packets to a peer.
  * </p>
+ * 
  * <p>
  * The peer URI format depends on the transport implementation.
  * </p>
@@ -92,7 +93,7 @@ public interface TransportFactory extends Reporter {
 	/**
 	 * Get the default key for this registry. While the user is allowed to use a
 	 * different key, this one is used for generic initialization (such was in
-	 * the TransportRegistry) or if the user does not intent to use multiple
+	 * the TransportRegistry) or if the user does not intend to use multiple
 	 * instances of a transport implementation.
 	 * 
 	 * @return The default key for the transport factory implementation.
@@ -124,6 +125,9 @@ public interface TransportFactory extends Reporter {
 	 * 
 	 * @param inboundEndpoint
 	 *            The in-bound end-point.
+	 * @throws IllegalStateException
+	 *             if the transport factory is not in the right state to add
+	 *             in-bound end-points.
 	 */
 	public void addInboundEndpoint(Endpoint inboundEndpoint);
 

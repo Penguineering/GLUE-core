@@ -93,18 +93,18 @@ public abstract class PacketThread {
 
 	/**
 	 * Send a packet in this thread. The thread's connection is used. If this
-	 * method returns without an exception, the payload could be serialized and
+	 * method returns without an exception, the pay-load could be serialized and
 	 * the packet has been successfully added to the packet queue. However,
 	 * errors may still occur during the delivery process, which will be
 	 * announced over the Reporter framework.
 	 * 
 	 * @param payload
-	 *            the payload to send with this message
+	 *            the pay-load to send with this message
 	 * @param prority
 	 *            the message priority, if supported by the transport, otherwise
 	 *            this parameter may be ignored.
 	 * @throws TransportException
-	 *             If the connection schema is unknown, the payload cannot be
+	 *             If the connection schema is unknown, the pay-load cannot be
 	 *             serialized or the packet could not be delivered to the send
 	 *             queue.
 	 * @throws IllegalStateException
@@ -123,6 +123,8 @@ public abstract class PacketThread {
 			final SerializationProvider prov = connection.getEndpoint()
 					.getSerializationProvider();
 
+			// retrieve the serializer according to the connection's
+			// serialization format
 			final Serializer serializer = prov == null ? null : prov
 					.getSerializer(getConnection().getSerializationFormat());
 
@@ -137,8 +139,8 @@ public abstract class PacketThread {
 			// send the serialized payload
 			sendSerializedPayload(p, priority);
 		} catch (SerializationException e) {
-			throw new TransportException("Error on payload serialization: "
-					+ e.getMessage(), e);
+			throw new TransportException(String.format(
+					"Error on payload serialization: %s", e.getMessage()), e);
 		}
 	}
 
@@ -191,7 +193,7 @@ public abstract class PacketThread {
 	 * one-to-one matching between packet threads and IDs, so that the ID can be
 	 * used to store a reference to the packet thread.
 	 * 
-	 * @return The ID of this packet thread, which must not be null.
+	 * @return The ID of this packet thread, which must not be <code>null</code>.
 	 */
 	public final String getId() {
 		return this.id;
