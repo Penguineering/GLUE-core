@@ -106,7 +106,7 @@ public class PacketThreadTests {
 	@Test(expected = TransportException.class)
 	public void T12_send_SchemaRecordNull() throws SerializationException,
 			TransportException {
-		String connectionSchema = "glue://test";
+		//String connectionSchema = "glue://test";
 		String connectionSchema2 = "glue://test2";
 		String serializationFormat = SerializationProvider.STRING;
 		String payload = "";

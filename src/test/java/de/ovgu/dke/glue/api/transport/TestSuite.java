@@ -19,7 +19,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * 
  */
 @RunWith(Suite.class)
-@SuiteClasses({ TransportRegistryTests.class, PacketThreadTests.class })
+@SuiteClasses({ PacketThreadTests.class })
 public class TestSuite {
 
 }

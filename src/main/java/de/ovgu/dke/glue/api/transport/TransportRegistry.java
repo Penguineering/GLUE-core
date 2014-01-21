@@ -23,7 +23,6 @@ package de.ovgu.dke.glue.api.transport;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -48,25 +47,19 @@ import net.jcip.annotations.ThreadSafe;
  *         (sebastian.stober@ovgu.de), Thomas Low (thomas.low@ovgu.de)
  */
 @ThreadSafe
-public enum TransportRegistry {
+public class TransportRegistry {
 	/**
-	 * The global instance of this registry.
+	 * Create an instance of the transport registry.
+	 * 
+	 * @return A new instance of the transport registry.
 	 */
-	INSTANCE;
+	public static TransportRegistry newInstance() {
+		return new TransportRegistry();
+	}
 
 	public static boolean AS_DEFAULT = true;
 	public static boolean NO_DEFAULT = false;
 	public static String DEFAULT_KEY = null;
-
-	/**
-	 * Get the singleton instance of the transport registry.
-	 * 
-	 * @return Singleton transport registry instance.
-	 * @deprecated use the enum instance instead
-	 */
-	public static synchronized TransportRegistry getInstance() {
-		return INSTANCE;
-	}
 
 	private final Map<String, TransportFactory> registry;
 	private String defaultKey;
@@ -161,77 +154,8 @@ public enum TransportRegistry {
 	 *         no default is set or there is no transport factory for the
 	 *         default key in the registry.
 	 */
-	public static synchronized TransportFactory getDefaultTransportFactory() {
-		final TransportRegistry reg = getInstance();
-		return reg.defaultKey == null ? null : reg
-				.getTransportFactory(reg.defaultKey);
-	}
-
-	/**
-	 * <p>
-	 * Generic loading for a transport factory, which only needs to be specified
-	 * by its class name. This way a transport implementation can be invoked
-	 * without any compile time dependency.
-	 * </p>
-	 * 
-	 * <p>
-	 * After creating an instance of the transport factory, the default packet
-	 * handler factory and the serialization provider are set. Then
-	 * <code>init()</code> is called and the factory is registered.
-	 * </p>
-	 * 
-	 * @param factoryClass
-	 *            The canonical class name of the transport factory.
-	 * @param config
-	 *            A properties instance which will be handed to the transport
-	 *            implementation.
-	 * @param asDefault
-	 *            Set to <code>AS_DEFAULT</code> if this is the default factory,
-	 *            <code>NO_DEFAULT</code> otherwise.
-	 * @param key
-	 *            The key to use for this transport factory,
-	 *            <code>DEFAULT_KEY</code> if you do not want to specify.
-	 * @return the transport factory instance
-	 * @throws ClassNotFoundException
-	 *             if the factoryClass cannot be loaded
-	 * @throws TransportException
-	 *             if anything goes wrong during instantiation or setup
-	 */
-	public TransportFactory loadTransportFactory(String factoryClass,
-			Properties config, boolean asDefault,
-			String key) throws ClassNotFoundException, TransportException {
-		try {
-			// get the class
-			final Class<?> clazz = Class.forName(factoryClass);
-
-			// create instance
-			final TransportFactory factory = (TransportFactory) clazz
-					.newInstance();
-
-			// some setup
-			if (factory != null) {
-				factory.init(config);
-
-				// register the factory
-				registerTransportFactory(key, factory, asDefault);
-			}
-
-			return factory;
-		} catch (SecurityException e) {
-			throw new TransportException(
-					"Security exception on accessing constructor for "
-							+ factoryClass + ": " + e.getMessage(), e);
-		} catch (IllegalArgumentException e) {
-			throw new TransportException(
-					"Illegal arguments calling constructor for " + factoryClass
-							+ ": " + e.getMessage(), e);
-		} catch (InstantiationException e) {
-			throw new TransportException("Could not instantiate "
-					+ factoryClass + ": " + e.getMessage(), e);
-		} catch (IllegalAccessException e) {
-			throw new TransportException("Illegal access: " + e.getMessage(), e);
-		}
-
+	public synchronized TransportFactory getDefaultTransportFactory() {
+		return defaultKey == null ? null : getTransportFactory(defaultKey);
 	}
 
 	/**
@@ -243,5 +167,5 @@ public enum TransportRegistry {
 			factory.dispose();
 		defaultKey = null;
 		registry.clear();
-	}	
+	}
 }
