@@ -132,7 +132,7 @@ public interface TransportFactory extends Reporter {
 	public void addInboundEndpoint(Endpoint inboundEndpoint);
 
 	/**
-	 * Add a life-cycle listener to this transport.
+	 * Add this life-cycle listener to each created transport.
 	 * 
 	 * @param listener
 	 *            The life-cycle listener to add.
@@ -141,7 +141,7 @@ public interface TransportFactory extends Reporter {
 			TransportLifecycleListener listener);
 
 	/**
-	 * Remove a life-cycle listener from this report.
+	 * Remove global life-cycle listener.
 	 * 
 	 * @param listener
 	 *            The life-cycle listener to remove.

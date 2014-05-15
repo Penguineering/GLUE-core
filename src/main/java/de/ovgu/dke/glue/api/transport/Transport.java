@@ -64,7 +64,7 @@ public interface Transport {
 		CONNECTED,
 		/**
 		 * Serialization has been negotiated and packets can be understood by
-		 * the remote peer.
+		 * the remote peer. TODO Should this really be a distinct state?
 		 */
 		CHECKED,
 		/**
@@ -114,4 +114,23 @@ public interface Transport {
 	 */
 	public Connection getConnection(final Endpoint endpoint)
 			throws TransportException;
+
+	/**
+	 * Add life-cycle listener.
+	 * 
+	 * @param listener
+	 *            The life-cycle listener to add.
+	 */
+	public void addTransportLifecycleListener(
+			TransportLifecycleListener listener);
+
+	/**
+	 * Remove life-cycle listener.
+	 * 
+	 * @param listener
+	 *            The life-cycle listener to remove.
+	 */
+	public void removeTransportLifecycleListener(
+			TransportLifecycleListener listener);
+
 }
