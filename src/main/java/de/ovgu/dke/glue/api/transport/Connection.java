@@ -60,6 +60,16 @@ public interface Connection {
 	public Endpoint getEndpoint();
 
 	/**
+	 * Get the connection's "public" address, i.e. the peer URI that would be
+	 * needed to reach this connection's endpoint.
+	 * 
+	 * This information can be used let other peers initiate communication.
+	 * 
+	 * @return The URI of the connection's "public" address.
+	 */
+	public URI getPublicAddress();
+
+	/**
 	 * Get the connection's serialization format. The value depends on the
 	 * transport's capabilities, but may vary between connections if a transport
 	 * supports more than one format.
